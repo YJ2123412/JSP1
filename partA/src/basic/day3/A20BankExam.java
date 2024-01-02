@@ -46,7 +46,7 @@ public class A20BankExam {
                     System.out.println("잘못된 입력입니다. 1~4만 입력하세요");
             }
         }   
-        
+        System.out.println("코드 변경 확인인");
         sc.close();
     }
     
