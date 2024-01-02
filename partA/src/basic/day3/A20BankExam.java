@@ -47,6 +47,7 @@ public class A20BankExam {
             }
         }   
         System.out.println("코드 변경 확인인");
+         System.out.println("코드 변경 확인인222");
         sc.close();
     }
     
