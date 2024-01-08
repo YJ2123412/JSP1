@@ -1,0 +1,64 @@
+GIT
+
+한번만 적용
+git init -> 설정하겟다..
+git config --global user.email "dpwls96923@gmail.com"  ->메일 설정
+git config user.email->등록된 유저 확인
+git config user.name - > 이름 확인
+git remote add origin https://github.com/YJ2123412/JAVALESSON.git  - 주소
+
+여러번 적용
+반복되는 작업
+1)vs code: Staged Changer로 커밋할 파일 선택
+2)vs code: commit 하기, 메시지 꼭 작설하기
+3) ...메뉴에서 pull , push->로 소스 전송
+
+
+
+
+집에가서 한번만 할 것
+1) get clone 원격주소 -> 깃허브주소
+2)git config --global user.email
+3) git config --global user.name
+4) clone으로 생긴 프로젝트를 vs code로 열기
+
+집에서 반복
+1)vs code 메뉴에서 pull. github에 있는 소스를 받아오기(동기화)
+2) 새로 작성한 연습 코드 소스 파일은 push
+
+blame 모드를 누르면 변경된 것을 확인할 수 있음
+
+
+git log -> 기록확인
+
+
+vs코드에서 커밋한 후에 ...메뉴에서 push 해야 허브에 올라감
+수정 후 다시올릴때.. 파일이름만 그대로면 설명이 바뀌어도 같은 파일로 인식함
+
+
+https://github.com
+https://github.com/YJ2123412/JAVALESSON.git
+
+주소복사: 쉬프트+인서트
+
+git remote -v (링크확인)
+
+-> 이후 vs와 연동
+
+유저 이름 설정: git config --global user.name "YJ2123412"
+ 
+
+git push origin main
+-> 잘되면 성공메세지 뜸
+Enumerating objects: 12, done.
+Counting objects: 100% (12/12), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (12/12), 5.15 KiB | 1.29 MiB/s, done.
+Total 12 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/YJ2123412/JAVALESSON.git
+ * [new branch]      main -> main
+
+
+홈페이지 프로필 - > 전체설정
+각 페이지의 설정은 그 페이지의 설정

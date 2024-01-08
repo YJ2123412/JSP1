@@ -1,0 +1,68 @@
+참조값이 없는 상태 = null (int = 0)
+참조값 = 4 byte
+
+IT 유튜버 -> 노마드
+
+
+new를 만나면 필드를 정의할 수 있는 공간이 만들어짐, 맨 처음 참조값은 0, get,set 활용해야함
+
+인자값의 이름은 분명하게(변수 이름과 동일하게) - 그렇게 되면 헷갈리기에 this.을 붙여서 위와 아래를 구분해줌
+
+    public void setField2(int f2){
+        field2 = f2;
+    }   x 
+
+  public void setField2(int field2) {
+        this.field2 = field2;
+    } O
+--
+continue 아래 있는 코드를 실행하지 않고 다시 반복문 시작으로 돌아감
+메소드도 private 가능
+
+필요에 따라서는 기존의 setter 메소드는 사용하지 않고 추가적인 비지니스로직을 구현하는 메소드를 만듭니다
+
+Cart
+    public void total_Money(int[] select){ //setter의 역할
+        int sum =0;
+        for(int i = 0; i<select.length; i++){
+            int temp = select[i];
+            if(temp == -1) break;
+            sum+=prices[temp];
+        }  this. total_Money = sum;
+    }
+
+Main
+    a.total_Money(select);
+    System.out.println(a.getUserId()+"님이 선택하신 상품 합계: "+a.getTotal_Money());
+
+
+
+
+
+
+혹은 System.out.prinln(String.format(,))
+
+ctor - > 퍼블릭 메소드 만들어냄
+
+    public MyClass4(String field1) {
+        this.field1=field1;
+    }
+
+    public MyClass4(생성자) {
+        this.field1=field1;
+    }
+
+리턴값 String 으로 출력하고싶으면
+public String getData(){
+        return String.format("%s\t %d\t %s\t %s,",productName,price,company, Arrays.toString(etc));
+String.format 사용해서 문장만들기
+
+
+-------------------
+
+
+
+
+
+
+
