@@ -36,7 +36,7 @@ public class B04CartMain {
     System.out.println("물품을 고르세요. 선택종료는 -1 입니다.");
     int sel = 0;
     int[] select = new int[5]; //상품 선택 개수는 최대 5개
-    String[] n = new String[select.length];
+    //String[] n = new String[select.length];
     int k =0; //select 배열 인덱스
     
     while(sel!=-1 && k<prices.length){

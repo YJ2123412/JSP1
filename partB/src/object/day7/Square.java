@@ -1,6 +1,6 @@
 package object.day7;
 
-import object.day7.Shape; //다른 패키지 클래스는 import 필요
+//import object.day7.Shape; //다른 패키지 클래스는 import 필요
 
 public class Square extends Shape{ 
 

@@ -45,7 +45,7 @@ public class B09ShapeMain {
     //2) 부모 객체를 자식 타입으로 참조할 수 있음????? 없음xxxxxxx
     // Triangle tempTriangle = new Shape("임시도형", 20, 30);
     // 부모 객체를 자식 타입으로 참조하기 위해 강제 캐스팅.
-    Triangle tempTriangle = (Triangle) new Shape("임시도형", 20, 30);
+    //Triangle tempTriangle = (Triangle) new Shape("임시도형", 20, 30);
     //강제 캐스팅은 했으나 Triangle에 필요한 인스턴스 필드가 안 만들어져서 오류
 
     //1) 과 2)에 대해 메소드 사용 제한 확인해보세요~~~

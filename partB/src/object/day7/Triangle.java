@@ -60,6 +60,11 @@ public class Triangle extends Shape{  	//extenda Shape
 	public void printAngle() {
 		System.out.println("삼각형 각도 : " + getAngle());
 	}
+
+	@Override
+	public String toString() {
+		return super.toString()+"[각도 = "+this.angle+"]"; //부모에다가 자식이 추가함
+	}
 }
 
 

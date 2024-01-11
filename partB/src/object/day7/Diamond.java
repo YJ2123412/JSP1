@@ -21,6 +21,17 @@ public class Diamond extends Shape {
   public void draw(){
     System.out.println("다이아몬드:"+this.getShapeName()+"를 그립니다.");
   }
+  @Override // 오브젝트 클래스의 toString메소드를 오버라이드한 것
+  //기본: object.day7.Diamond@1c20c684 // 변경: Diamond[]
+  public String toString() {
+    return "Diamond []";
+  }
+
+  //자식클래스가 정의한 인스턴스메소드 - diamond 타입으로 선언한 참조변수만 실행할 수 있음
+  public void iAmDiamond(){
+    System.out.println("나는 다이아몬드~ 반짝반짝");
+
+  }
 
   public void setRound(int round){
     this.round = round;

@@ -58,5 +58,6 @@ public class B04CartMain {
 
         // 필요에 따라서는 기존의 setter 메소드는 사용하지 않고
         //      추가적인 비지니스로직을 구현하는 메소드를 만듭니다. => total_Money() 메소드
+        sc.close();
     }
 }

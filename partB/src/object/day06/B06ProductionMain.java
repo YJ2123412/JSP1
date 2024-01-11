@@ -1,6 +1,6 @@
 package object.day06;
 
-import java.util.Arrays;
+//import java.util.Arrays;
 
 public class B06ProductionMain {
     public static void main(String[] args) {
@@ -39,7 +39,7 @@ public class B06ProductionMain {
 
         //get을 통해 배열을 바꿀 수는 없지만(주소값) 그 안에 있는 내용은 바꿔줄 수 있음(값)
 
-        int[] numbers = new int[3]; //정수 3개 저장
+        //int[] numbers = new int[3]; //정수 3개 저장
         Product[] mycarts = new Product[5]; //프로덕트 객체배열 - 프로덕트 타입으로 만들어진 객체의 참조값 저장 배열
         mycarts[0]= drink;
         mycarts[1]= icecream;

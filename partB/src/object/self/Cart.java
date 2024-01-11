@@ -41,7 +41,7 @@ public class Cart {
     
     public void selectProduct(int[] select){
         StringBuilder sb = new StringBuilder();
-        String[] name = new String [prices.length];
+        //String[] name = new String [prices.length];
         for(int i = 0; i<select.length; i++){
             sb.append(productNames[i]);
         }   System.out.println(sb);

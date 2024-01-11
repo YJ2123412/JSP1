@@ -1,6 +1,6 @@
 package object.day7;
 
-import object.day7.Diamond;
+//import object.day7.Diamond;
 
 public class B11DiamondTest {
 
