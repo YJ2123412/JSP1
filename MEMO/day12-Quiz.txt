@@ -1,0 +1,50 @@
+
+----------------------------
+B조 문제
+day5
+1. 1 			O
+2. 접근제한자, 스태틱 		X
+3. 4		O
+4. 3		2,3
+5. 1, 3,4		3 X
+-6
+1. 4		O
+2. X		O
+3. O		O
+4. 오버라이딩은 메소드의 이름과 매개변수를 똑같이 가져가고 바디를 수정하거나 추가한다, 오버로딩은 메소드의 이름만 같을 뿐 그이외의 요소들은 변경된다.
+5. 기존에 메소드를 만들어둔 이유가 사라진다. 매개변수의 변경등만을 통해 이름은 같되 다른 내용이 담길 수 있도록 구분한다. 		세모
+6. O		O
+7. X		O
+8. X		X
+
+-7
+1-1 X 2. O 3. X 4.O 5. O		1. O 2. O 3. X 4. O 5. O
+2. 2			X
+3.  1, 3 		O
+4. 상수를 일컫으며 해당 필드 내에 정의된 변수와 객체들의 값은 변경할 수 없다. 		O
+5. Public, protected			세모.. 	+private
+
+-8 
+1. 객체 생성시 oneclass라고 class까지 붙여주어야 한다.
+2. X		O
+3. public static void main	x
+4. static	x
+5. Count2 two2 = new Count2();
+
+-9
+1. int ->Integer
+2. Comparator<Student> gradeAscending = public int compare(o1, o2) {
+return o1.getGrade()- o2.getGrade()};
+Arrays.sort(students, gradeAscending);
+}
+
+3. compare은 두가지 값을 비교하는 것이고 compareTo는 기준이 되는 해당 객체와 다른 값을 비교하는 것이다.
+4. 1
+5. 오름순에서 내림순으로 출력된다.
+
+-배열
+1. 0
+2. 
+3. 
+4. 4		O
+5. Hi my name is 3	O

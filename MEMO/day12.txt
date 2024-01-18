@@ -1,0 +1,78 @@
+day12
+
+public int indexOfWord(String english,int position){
+        for(int i=position;i<words.size();i++){
+            if(words.get(i).getEnglish().equals(english))
+                return i;       //찾으면 인덱스 리턴
+        }   
+        return -1;
+    }
+
+return이 -1인 이유 ->음수로 만들어놓음으로써 조건에 걸리게 만듬
+
+
+
+default List<JavaWord> search(Object object){
+        return null;
+    }  -> default가 붙으면 인터페이스에서의 의무가 되지 않음 .. 그냥 선택기능추가가 됨
+
+
+예외
+실행중에 발생하는 예기치 않은 상황
+Class Exception의 하위 클래스들... 
+RuntimeException->실행 시점.. 실행할때 생기는 오류
+
+throws IOException  -> 강요 체크
+
+-1 = ctrl+z (입력끝) +엔터
+
+인코딩에 따라 각각 바이트를 세는 것이 다름..
+utf-8인코딩 방식
+한글은 3바이트
+영문, 기호, 숫자는 1바이트
+엔터는 2바이트(13과 10)
+
+모두 2바이트 ->ANSI 윈도우 터미널 인코딩 방식
+
+------------------
+
+File Input -> 화면(표준) 출력
+//File Input -> File Output (이미지 파일 복사)
+//바이트 기반은 문자형식의 타입이 아닐때 주로 쓰임 - 문자, 그림, 영상 등 이진 형식
+//문자 기반 스트림 : 문자 단위 입출력 - 문자 형식만
+
+Stream: 입출력을 위해 2개의 스트림 사용, FIFO 구조
+
+
+FileInputStream fis = new FileInputStream ->try-catch로 잡기
+
+FileNotFoundException 보다 IOException이 위
+
+파일-속성- 바이트 확인 가능
+
+chcp 65001 -> 원래는 인코딩 깨지면 콘솔창에 입력하면 해결됨...
+
+파일 경로에 |는 ||두개씩
+
+
+FileInputStream fis=null;
+        FileOutputStream fos = null; -> try-catch 밖에서 선언해야 finally에 쓸 수 있음(close();)
+
+-1이 되었다: 파일이 끝났다
+
+
+
+
+
+
+
+
+
+카톡에 올라온 B조문제 풀기
+
+각 조가 제출한 문제 중 우수한 문제는 후에 학원 평가에서 출제할 수도 있음
+(day9 마지막 문제 정답 -내림순에서 오름순)
+
+-> 선행: 문자 기반 스트림
+
+

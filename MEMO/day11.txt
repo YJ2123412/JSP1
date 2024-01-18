@@ -1,0 +1,21 @@
+day11
+
+여러개를 담을때 배열에는 기능이 없으니, 리스트를 쓰자
+
+  //프로그램 실행하는 객체 생성하고 start 메소드 프로그램 실행을 코딩
+        //메소드로 기능을 분리할때 main이 호출하는 static을 없애기 위함 - static은 꼭필요할때만 만들기
+
+스캔기능
+int select = Integer.parseInt(System.console().readLine());
+System.console() 시스템의 콘솔(표준 입출력 장치) 객체를 리턴
+readLine - > 파일이든 어디든 앞에 붙은게 무엇이냐에 따라 자유롭게 불러올 수 있음, 입력메소드
+(parseInt는 정수로 바꿔주는 것)
+
+System.exit(0); //main 종료
+
+대입문이 없다 = 리턴이 void 타입
+인자는 입력
+리턴은 출력
+
+boolean isFind = false 
+if(!isFind) -> false를 가져와서 ! 아니라고 하기에 ->isFind => true가 됨/ 하지만 isFind는 false 일때가 참이기에 실행이 되지 않음

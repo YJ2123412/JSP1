@@ -1,25 +1,23 @@
-package Day12;
+package Day13.Io;
 
 import java.util.List;
-
 import Day11.myapp.JavaWord;
 
 
 
 /**
- * JavaWordApp_V3 : 객체 지향 프로그래밍은 최대한 객체로 분리시켜서 
- *                  실행되는 환경에 독립적이 되도록 합니다.
- * JavaWord  : 단어 객체
- * JavaWordList : 단어장 객체
+ * JavaWordApp_V4 : 
+ * JavaWordList: 단어장 객체를 생성할 때 읽어올 단어장 파일을 꼭 전달해야 함
+ *              단어장 파일의 데이터로 리스트를 초기화 함
  * 
  */
-public class JavaWordApp_V3 {
+public class JavaWordApp_V4 {
     //private : JavaWordList 객체
-    private JavaWordList words = new JavaWordList();
+    private JavaWordList words = new JavaWordList("C:\\\\Users\\\\YJ\\\\Desktop\\\\Coding\\\\Main\\\\PARTC\\\\Wordtest.txt");
     
     //프로그램 실행을 시작하는 메소드
     private void start(){
-            words.initialize();           //words 리스트 요소를 몇개만 저장해서 초기화(테스트용)
+            words.fileLoad();           //words 리스트 요소를 몇개만 저장해서 초기화(테스트용)
             //단어 등록,목록,검색,삭제 기능을 메뉴로 구현합니다.
             System.out.println("단어장 프로그램 시작합니다.~~" + "~".repeat(30));
             while(true){
@@ -35,12 +33,16 @@ public class JavaWordApp_V3 {
                 switch (select) {
                     case 1:
                         addWord();          //단어 등록 메소드 실행
+                        words.filesave();
                         break;
                     case 2: listWord();  break;    // 단어 목록 조회 메소드 실행
                     case 3: searchWordBy();  break;    // 단어 목록 조회 메소드 실행
-                    case 4: removeWord();  break;    // 단어 목록 조회 메소드 실행
+                    case 4: removeWord();  
+                        words.filesave(); 
+                        break;    // 단어 목록 조회 메소드 실행
                     case 5: 
                         System.out.println("프로그램을 종료합니다.");
+                        words.filesave();
                         System.exit(0);     //main 실행을 종료  
                         break;    
                     default:
@@ -135,7 +137,7 @@ public class JavaWordApp_V3 {
         //프로그램 실행하는 객체 생성하고 
         //          (메소드로 기능을 분리할 때 main이 호출하는 static 을 없애기 위함.)
         //         start 메소드 프로그램 실행 내용을 코딩
-        JavaWordApp_V3 app = new JavaWordApp_V3();
+        JavaWordApp_V4 app = new JavaWordApp_V4();
         app.start();
     }
 

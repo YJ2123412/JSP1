@@ -5,10 +5,8 @@ import java.util.List;
 
 import Day11.myapp.JavaWord;
 
-/**
- * JavaWordApp_V3 : 아래의 JavaWordList 를 이용해서 똑같이 메뉴가 동작하도록 
- *                  변경할 수 있습니다.
- */
+   
+
 public class JavaWordList implements WordList {
     //최후 정리: 자바단어장 클래스에 적용될 인터페이스 생성
     
@@ -22,6 +20,7 @@ public class JavaWordList implements WordList {
         initialize();           //words 리스트 요소를 몇개만 저장해서 초기화(테스트용)
     }
    
+    
     void initialize() {
         words.add(new JavaWord("public", "공용의", 1));
         words.add(new JavaWord("public", "공동의", 2));
@@ -112,8 +111,8 @@ public class JavaWordList implements WordList {
    
     // 출력 메소드 
     
-    public static void print(List<myapp.JavaWord> list){
-        for(myapp.JavaWord word : list) {
+    public static void print(List<JavaWord> list){
+        for(JavaWord word : list) {
             System.out.println(String.format("%-20s %-30s %-20s",
                                     word.getEnglish(),word.getKorean(),word.getLevel()));
         }
