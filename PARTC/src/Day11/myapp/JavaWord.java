@@ -12,6 +12,7 @@ public class JavaWord {
 
     }
 
+
     @Override
     public String toString() {
         return this.english+","+ this.korean+","+this.level;
