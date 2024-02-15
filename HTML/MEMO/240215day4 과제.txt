@@ -1,0 +1,41 @@
+day4 과제
+-var, let, const의 차이
+
+- var : 전역 범위, 재정의 가능
+- let : 블록{}범위, 재선언 불가능
+- const : 블록 범위, 상수
+
+
+
+-getElementById()는 무엇인가?
+
+element = document.getElementById(id);
+id를 통해 엘리먼트를 반환한다. 만약 document에 구체적인 ID의 엘리먼트가 없다면 null을 반환한다.
+
+-querySelector()는 무엇인가?
+
+element = document.querySelector(selectors);
+selector의 구체적인 그룹과 일치하는 document안 첫번째 엘리먼트를 반환한다. 일치하는게 없으면 null반환한다.
+
+-차이점: 비슷하다
+더 구체적인 엘리먼트를 선택하고 싶다면, querySelector그리고 querySelectorAll을 사용해보자!
+그러나 위 둘에 비해 getElementByID가 더 빠르고 더 잘 지원이 된다는 것을 알아두자.
+
+
+
+외울것 
+- **getElementById**: 지정된 id로 요소를 가져오기. 리턴이 단일 요소
+- getElementsByClassName: 지정된 class 이름으로 요소들을 가져오기. 리턴이 배열(컬렉션) 형식 다중 요소
+- getElmentsByTagName	: 지정된 tag 이름으로 요소들을 가져오기
+- querySelector	: 선택자로 가져오기.단일 요소 가져오기. css 에서 사용한 선택자 기호 동일하게 작성.
+- querySelectorAll: 선택자로 가져오기. 여러개 요소 가져오기- 태그이름.클래스 이름 사용
+
+const tbody = document.getElementById('vertical') //해당 id의 요소를 가져오겠다
+const tbody = document.querySelector('tbody') //tbody가 한개일때만 가능 - table 태그의 tbody는 브라우저에서 자동 추가
+
+맨처음
+*{margin: 0; padding0;} 초기화하고시작하기
+
+
+
+
