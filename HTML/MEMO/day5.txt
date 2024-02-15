@@ -214,5 +214,40 @@ var regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z]
                 alert(`안녕하세요. 나는 ${this.name}입니다.`)
             }
 
--this 사용 가능 (애로우function에서는 불가능)
+-this 사용 가능 (애로우function에서는 불가능 -> 익명객체 형태이기에 .. this는 정의되어있는 것이기에 ->메소드 정의할때는 function으로 적자...)
 
+
+
+-배열
+//구성요소가 없는 객체리터럴 선언
+            const momo= {}
+            momo.color = 'red';
+
+            // 배열값이 없는 빈 배열 선언
+            const arr=[];
+            // 배열값 형식이 달라도 저장할 수 있음
+            const arrr=['a',123,new Date()];
+            
+            // 객체의 구성요소가 다르지만 같은 배열에 저장 가능
+            const objarr = [momo, sana];
+            console.log(objarr);
+
+---
+prompt - 입력창
+
+-----------
+중요!!!!!!!!!!!!!!!!!
+
+공공데이터 rest api에서 받는 데이터 형식 중 하나가 자바스크립트 객체와 변환되는 json이라는 문자열(*****)
+
+https://www.data.go.kr/
+https://developers.kakao.com/
+ 
+talend api 
+
+
+KakaoAK 11630b5c237e76994876b14e394d3190
+->한칸띄고 내 key값 넣기
+
+
+비동기통신방법으로 자바스크립트에서 사용
