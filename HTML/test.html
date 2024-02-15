@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입을 환영합니다.</title>
+    <style>
+        *{
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+        li{
+            list-style: none; align-items: center; text-align: center; font-size: 2rem;
+        }
+        fieldset{width: 50%; margin: 0 auto;  border-color: aquamarine; 
+        }
+        legend{text-align: center; font-size: 1.5rem; padding: 2%;
+        }
+        form{
+            align-items: center; padding-top: 40px; border: 2rem;
+        }
+        button{
+            text-align: center;
+        }
+        h3{
+            text-align: center;
+        }
+        #input{
+            margin: 10px 10px;
+        }
+        input[type=text],
+        input[type=number] {
+            width: 200px;
+            padding: 7px 14px;
+            margin: 4px;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <form>
+        <fieldset>
+            <legend>회원가입</legend>
+            <ul id="input">
+                <h3><label for="nameform">이름</label></h3>
+                <li><input type="text"; name="name" id="nameform" placeholder="이름을 입력하세요"></li>
+            </ul>    
+            <ul id="input">
+                <h3><label for="telform">핸드폰 번호</label></h3>
+                <li><input type="number"; name="tel" id="telform" placeholder="핸드폰 번호를 입력하세요"></li>
+            </ul>
+            <ul id="input">
+                <li><input type="date"; name="birth"; id="birth" > </li>
+            </ul>
+            
+        </fieldset>
+        <button> 작성 완료 </button>
+    </form>
+    
+
+
+    <script>
+        function save(){
+            const name = document.getElementById('name')
+            const tel = document.querySelector('tel')
+            console.log(name)
+            console.log(tel)
+
+        }
+
+
+        function isValid(){
+
+        }
+
+    </script>
+</body>
+</html>

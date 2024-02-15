@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+</head>
+<body>
+    <h3>자바스크립트의 오브젝트</h3>    
+    <ul>
+        <li> - 자바스크립트의 객체를 정의하기: 기호 {}</li>
+        <li> - 자바에서는 객체의 구성요소 - 속성과 메소드 -> 미리 클래스로 정의</li>
+        <li> - 자바스크립트는 구성요소를 미리 정의하지않는 프로토타입 기반 객체</li>
+        <li> - → 구성요소인 속성과 메소드의 추가가 가능</li>
+    </ul>
+    <pre style="font-size: 1.2rem; font-family: inherit;">
+        <script>
+            //객체 리터럴을 const 변수 sana에 대입 - 객체이름:sana
+            // key: value ->map과 유사
+            const sana = {name:'사나', age:23, address:'경기'}
+            document.writeln('sana 이름=', sana.name)
+            document.writeln('sana 나이=', sana.age)
+            document.writeln('sana 주소=', sana.address)
+            document.writeln('sana =', sana)
+            console.log('sana=',sana)
+            sana.height=172;
+            console.log('sana=',sana)
+
+            //객체의 메소드는 함수 리터럴(문자)로 정의
+            // 새로운 속성(프로퍼티) 이름은 hello, 값은 함수 => hello 메소드
+            sana.hello = function(){
+                alert(`안녕하세요. 나는 ${this.name}입니다.`)
+            }
+
+            sana.hello();
+            sana.name='sanaaaa'
+            sana.hello();
+        </script>
+    </pre>
+    
+</body>
+</html>
