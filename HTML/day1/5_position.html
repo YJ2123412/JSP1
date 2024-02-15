@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html{
+            /* 16px X 0.625 = 10px = 1rem ->너비와 높이 계산 편하게 하기 위함 */
+            font-size: 62.5%;
+
+        }
+        /* 모든 요소에 적용할 스타일 선택자는 *(와일드 카드 문자) */
+        *{
+            box-sizing: border-box;
+        }
+        body{
+            /* 글씨크기 16px */
+            font-size: 1.6rem;
+        }
+        div{
+            box-sizing: border-box;
+            border: 2px dotted green;
+            margin: 2rem;
+            width: 10rem;
+            height: 12rem;
+        }
+        /* 선택자: class 이름 사용.  모든 child 요소에 적용 */
+        .child{
+            width: 8rem;
+            height: 8rem;
+            padding: 1rem;
+            margin: 1rem;
+        }
+        .child_realtive{
+            /* 현재 위치에서 좌표 이동할 수 있음. 좌표값은 top-left */
+            position: relative;
+            top:2rem;
+            left: 2rem;
+            border: 1px solid brown;
+        }
+        .child_absolute{
+            /* 제일 위. 
+            top,left는 브라우저 화면 맨 왼쪽위가 0
+            top: 세로, letf: 가로 방향으로 값이 증가
+            스크롤하면 화면에서 없어짐 */
+
+            position: absolute;
+            top:2rem;
+            left: 2rem;
+            border: 1px solid rgb(42, 54, 165);
+            background-color: beige;
+        }
+        /* 스크롤하면 화면 속 같은 위치에 고정됨 */
+        .child_fixed{
+            position: fixed;
+            top:2rem;
+            left: 2rem;
+            border: 1px solid rgb(94, 251, 217);
+            background-color: rgb(237, 237, 51);
+        }
+    </style>
+</head>
+<body>
+    <h3>positon</h3>
+    <p>
+        웹문서 상에서 요소를 배치할때 기존 흐름과 다르게 할 수 있는 속성이 있음
+    </p>
+    <div>
+        <div class = "child">abcde abcde</div>
+    </div>
+    <div>
+        <!-- 클래스 이름을 여러가지 나열해서 적용시킬 수 있음 -->
+        <div class = "child child_realtive">abcde</div>
+    </div>
+    <div>
+        <div class="child child_absolute">abcde</div>
+    </div>
+    <div>
+        <div class="child child_fixed">abcde</div>
+    </div>
+
+    
+</body>
+</html>

@@ -1,0 +1,386 @@
+DDL
+DML
+DCL
+
+오라클 ROWNUM 컬럼: 오라클이 SELECT 결과에 부여하는 행번호, 오라클이 내부적으로 관리를 위한 컬럼
+ * */
+--1)상품 테이블의 상품 가격을 내림차순으로 정렬하여 조회
+SELECT *
+FROM TBL_PRODUCT tp 
+ORDER BY PRICE DESC ;
+
+--2) ROWNUM 컬럼을 출력, 정렬 이전의 ROWNUM(원하는 결과가 아님)   --ROWNUM은 SELECT된 결과에 붙이는 것..
+SELECT ROWNUM, TP.*
+FROM TBL_PRODUCT TP
+ORDER BY PRICE DESC;
+
+--3)서브 쿼리로 변경 --원하는 ROWNUM출력을 위해서는 서브쿼리로 만들어야함
+SELECT ROWNUM, TP.*,TPCODE.*
+FROM(
+	SELECT *
+	FROM TBL_PRODUCT 
+	ORDER BY PRICE DESC
+	)TP
+
+--4) 결과에 ROWNUM 조건을 적용해봅시다
+SELECT ROWNUM, TP.*
+FROM(
+	SELECT *
+	FROM TBL_PRODUCT 
+	ORDER BY PRICE DESC
+	)TP
+--WHERE ROWNUM=1    --ROWNUM이 1이 포함되는 경우만 가져올 수 있음
+--WHERE ROWNUM=3 --안됨
+
+--5) 중간 일부를 가져오기 위해서 BETWEEN ~ AND  연산.. 4번을 대상으로 서브 쿼리를 또 써야함
+--예시 : 게시판의 글목록에 대해 페이지 번호 적용합니다.
+SELECT *
+FROM (
+	SELECT ROWNUM R, TP.* --괄호 속 ROWNUM에 대한 별칭 필요 (ROWNUM은 컬럼 키워드이기에), 밖에서 사용하기 위해..
+	FROM(
+		SELECT *
+		FROM TBL_PRODUCT 
+		ORDER BY PRICE DESC
+		)TP
+	)
+--WHERE R=3;
+WHERE R BETWEEN 2 AND 4;
+
+--6)오라클 12C 버전부터는 FETCH 명령이 있음  ->4번을 대신하여 사용가능(ROWNUM<3)과 같은 결과
+SELECT *
+FROM TBL_PRODUCT tp 
+ORDER BY PRICE DESC 
+FETCH FIRST 2 ROWS ONLY; --TOP2 가져오기
+
+--여러개 동시에 서브쿼리로 만들기 가능
+SELECT ROWNUM, TP.*,TPCODE.*
+FROM(
+	SELECT *
+	FROM TBL_PRODUCT 
+	ORDER BY PRICE DESC
+	)TP,
+	(
+	SELECT *
+	FROM TBL_PRODUCT 
+	ORDER BY PCODE DESC
+	)TPCODE;
+
+
+
+
+
+ 오라클의 RANK 함수
+ 예제: 고객- 상품별 최대 구매 금액을 구하고 해당 상품코드 조회하기
+ 	ㄴ고객ID로 1차 그룹화, 고객 내에서 상품코드로 2차 그룹화
+ **/
+--준비) MINA에게 구매 이력이 있는 상품을 한번 더 구매시킴
+INSERT INTO TBL_BUY tp2  VALUES(BUY_PK_SEQ.NEXTVAL, 'mina012','JINRMn5',13,'2024-01-26');
+SELECT *
+FROM TBL_BUY TB, TBL_PRODUCT TP
+WHERE TB.PCODE = TP.PCODE;
+
+--1) GROUP BY
+SELECT TB.CUSTOMID , TB.PCODE ,SUM(TP.PRICE*TB.QUANTITY) "총합"    --가격*수량에 대한 그룹화 함수 SUM 실행 -진라면 갯수 합해짐
+FROM TBL_BUY TB, TBL_PRODUCT TP
+WHERE TB.PCODE = TP.PCODE
+GROUP BY TB.CUSTOMID, TB.PCODE ;
+
+--2) 1번 결과 정렬
+SELECT TB.CUSTOMID , TB.PCODE ,SUM(TP.PRICE*TB.QUANTITY) MONEY 
+FROM TBL_BUY TB, TBL_PRODUCT TP
+WHERE TB.PCODE = TP.PCODE
+GROUP BY TB.CUSTOMID, TB.PCODE 
+ORDER BY TB.CUSTOMID, MONEY DESC 
+
+
+--같은 수준의 SELECT에서는 AS로 호출 불가능
+--3)1번에 RANK 함수 적용
+SELECT TB.CUSTOMID , TB.PCODE ,SUM(TP.PRICE*TB.QUANTITY) MONEY, 
+RANK() OVER (PARTITION BY TB.CUSTOMID ORDER BY SUM(TP.PRICE*TB.QUANTITY)DESC) "RANK"
+--PARTITION BY ->GROUP BY랑 비슷함.. 적힌 것끼리 묶음
+--OVER()안에는 어떤 컬럼으로 정렬해서 순위를 매기는지에 대한 내용
+--RANK() OVER (ORDER BY SUM(TP.PRICE*TB.QUANTITY)DESC) "RANK"  --그룹화된  MONEY 순위
+FROM TBL_BUY TB, TBL_PRODUCT TP
+WHERE TB.PCODE = TP.PCODE
+GROUP BY TB.CUSTOMID, TB.PCODE ;
+
+--4) 3번을 서브쿼리로 하여 RANK=1인 조건을 적용해보기
+WITH CUSTOMSALE
+AS
+(SELECT TB.CUSTOMID , TB.PCODE ,SUM(TP.PRICE*TB.QUANTITY) MONEY, 
+RANK() OVER (PARTITION BY TB.CUSTOMID ORDER BY SUM(TP.PRICE*TB.QUANTITY)DESC) "RANK"
+FROM TBL_BUY TB, TBL_PRODUCT TP
+WHERE TB.PCODE = TP.PCODE
+GROUP BY TB.CUSTOMID, TB.PCODE 
+)
+SELECT CUSTOMSALE.CUSTOMID,CUSTOMSALE.PCODE,CUSTOMSALE.MONEY,CUSTOMSALE.RANK
+FROM CUSTOMSALE
+WHERE RANK =1;
+
+
+
+create or replace ->만들어주고 혹시 있으면 대체해줄게
+
+
+
+ 데이터베이스 스키마: 컴퓨터 과학에서 데이터베이스 스키마는 데이터베이스에서 자료의 구조, 자료의 표현 방법, 자료 간의 관계를 '형식 언어로 정의한 구조'
+ 	풀이: 사용자가 계정을 받아서 여러가지 방법으로 데이터(자료)를 저장하고 관리하는 공간
+ 		 오라클 등 DBMS는 스키마에 여러 객체를 생성해서 사용합니다.
+ 
+ VIEW(뷰): 가상테이블
+ ㄴSELECT 조회 결과를 미리컴파일하여 오라클 객체로 저장
+ ㄴSELECT 조회 할 때 테이블처럼 사용
+ ㄴINSERT, UPDATE, DELETE는 제약이 많아 사용되지 않음
+ 
+ CREATE VIEW : 권한이 필요 ->관리자 계정으로 들어가서 권한을 주어야함
+ SQL> grant create view to C##IDEV;
+ 실행 후 재연결 혹은 재접속
+
+ */
+CREATE VIEW V_CUSTOMSALE
+AS
+SELECT TB.CUSTOMID , TB.PCODE ,SUM(TP.PRICE*TB.QUANTITY) MONEY, 
+RANK() OVER (PARTITION BY TB.CUSTOMID ORDER BY SUM(TP.PRICE*TB.QUANTITY)DESC) "RANK"
+FROM TBL_BUY TB, TBL_PRODUCT TP
+WHERE TB.PCODE = TP.PCODE
+GROUP BY TB.CUSTOMID, TB.PCODE ;
+
+--일반적인 select처럼 조회형식 모두 사용 가능
+SELECT vc.*, TP.PNAME 
+FROM V_CUSTOMSALE vc ,TBL_PRODUCT tp 
+WHERE vc.PCODE=tp.PCODE AND "RANK" =1;
+
+
+
+
+SUM과 GROUP BY는 짝임 같이써야함
+WITH는 한번만 사용
+
+
+진만님 문제 집중 -> 답을 다시 구하기.. 상품코드로 그룹바이하기
+-팔린갯수가 가장많은순서(상품코드로 그룹화)로 상품(상품코와 이름)을 정렬학고 총 팔린 금액출력
+
+조하연: 1)조인없는 서브쿼리 또는 2)조인만하기
+
+
+
+-- 1) (강주찬) '25살'이상 고객님들의 '구매'한 '상품명' => 2) 테이블 2개 조인으로 문제를 변경하세요.
+SELECT CUSTOMID , tc.AGE , tb.PCODE , PNAME 
+FROM TBL_CUSTOM tc  
+JOIN TBL_BUY tb
+ON tc.CUSTOM_ID = tb.CUSTOMID
+JOIN TBL_PRODUCT tp 
+ON tb.PCODE = tp.PCODE
+WHERE tc.AGE > 25;
+
+
+--------
+
+
+PL/SQL : Procedure(절차,순서) Language , 기존의 단순한 SQL이 확장된 언어(SQL로 만드는 프로그램)
+         변수,제어문(if,반복문)을 사용하여 프로그래밍언어와 같이 sql 실행의 흐름을 제어
+- 구성 : 선언부(DECLARE), 실행부(BEGIN), 예외처리부 (EXCEPTION)로 구성됨
+- 유형
+	1) Anonymous PL/SQL Block(익명블록) 
+	익명 블록은 주로 일회성으로 사용
+	2)Stored PL/SQL Block (저장 프로시저)
+	서버에 파싱해서 저장해 놓고 주기적으로 반복해서 사용할 경우 사용됨
+	서브프로그램 또는 프로그램 단위라고도 하며, 
+	스키마를 구성하는 오브젝트로서 파싱된 후 오라클 서버 내부에 저장되거나 오라클 툴 안에 라이브러리 형태로 저장되어 있음
+
+Declare (선언부)
+Executable (실행부) -BEGIN ~ END
+Exception (예외 처리부)
+*/
+SELECT * FROM TBL_CUSTOM tc ;
+--1) 익명 프로시저(일회용)
+DECLARE   -- 변수선언부  
+	-- vname varchar2(40);			 -- 스칼라변수
+	-- vage number(3,0);
+	vname tbl_custom.name %TYPE;     -- 참조변수(타입변수): 테이블명.컬럼명 %TYPE
+	vage tbl_custom.age %TYPE;
+
+
+BEGIN		--프로시저 시작(실행부)
+  -- 프로시저 내부에는 주로 트랜잭션을 구성하는 DML 명령문들을 작성, 중복 DML 가능
+	SELECT name,age 
+		INTO vname , vage	-- 프로시저 구문: 검색결과를 프로시저 일반 변수 vname, vage 에 저장 / 홍길동의 이름과 나이가 저장됨
+	FROM "TBL_CUSTOM" tc 
+	WHERE CUSTOM_ID ='hongGD';		-- 1개 행만 결과 조회되는 조건 (직접 지정)
+									-- 여러개 행 조회될때는 각 행에 접근하기 위한 cursor 필요.
+-- DBMS_OUTPUT 는 콘솔에 출력하는 오라클 패키지의 하나이며 PUT_LINE 함수
+	DBMS_OUTPUT.PUT_LINE('고객이름 : ' || vname);   -- ||는 문자열 연결 연산
+	DBMS_OUTPUT.PUT_LINE('고객나이 : ' || vage);
+	EXCEPTION		-- 예외(오류)처리
+	WHEN no_data_found THEN   -- no_data_found : (지정된) 예외 이름 , 모든 예외: OTHERS
+		DBMS_OUTPUT.PUT_LINE('찾는 데이터가 없습니다.');
+	
+END; --끝
+
+
+/*
+	저장 프로시저 생성
+	CREATE OR REPLACE PROCEDURE 프로시저 이름
+	( 매개변수이름 [IN 또는 OUT] 데이터 타입,.....) --IN: 입력매개변수(넣을것)  OUT:출력매개변수(리턴값 저장하는 변수)
+	[IS 또는 AS]
+		프로시저 변수 선언
+	BEGIN
+		프로시저 작업 내용 SQL들....
+
+	EXCEPTION 
+		WHEN 예외이름 THEN 처리 내용;
+
+	END ;
+
+
+*/
+
+
+-- 2) 1번(익명)을 저장 프로시저로 변경했습니다.
+--인자와 리턴을 주는 형식. 저장프로시저 정의하기
+CREATE OR REPLACE PROCEDURE search_custom(   -- 프로시저 이름 설정
+      c_id IN tbl_custom.CUSTOM_ID %TYPE      -- 매개변수(인자) IN 
+)
+IS 										--DECLARE없음... AS도 가능(AS=IS)
+   vname tbl_custom.name %TYPE;   -- 지정된 테이블의 컬럼과 동일형식의 변수
+   vage tbl_custom.age %TYPE;
+BEGIN 
+   SELECT name,age 
+      INTO vname , vage   
+   FROM "TBL_CUSTOM" tc 
+   WHERE CUSTOM_ID =c_id;      -- 1개 행만 결과 조회되는 조건. 매개변수로 전달된 값으로 조건 실행
+   
+   DBMS_OUTPUT.PUT_LINE('고객이름 : ' || vname);  --오라클 문자열에서 줄바꿈은 아스키코드값 10 :CHR(10)
+   DBMS_OUTPUT.PUT_LINE('고객나이 : ' || vage);
+   EXCEPTION      -- 예외(오류)처리
+   WHEN no_data_found THEN   
+      DBMS_OUTPUT.PUT_LINE(CHR(10)'찾는 데이터가 없습니다.');   
+END;   
+
+--프로시저 실행
+BEGIN
+	SEARCH_CUSTOM('mina012');
+END;
+
+--vs에서는 되는듯.. 디비버는 안됨
+EXEC SEARCH_CUSTOM('twice');
+
+
+
+
+--예제2 - 출력변수사용
+-- 구매 수량이 최대인 고객의 이름, 나이 출력하는 프로시저 : max_custom
+CREATE OR REPLACE PROCEDURE max_custom( -- 자바의 메소드 인자와 같은 개념/ NAME, AGE->매개변수
+   p_name OUT tbl_custom.NAME %TYPE,      -- 출력(리턴) 변수
+   p_age OUT tbl_custom.AGE %TYPE
+)
+IS
+   maxval number(5);
+   cid tbl_custom.custom_id %TYPE;
+BEGIN
+   SELECT max(quantity) 			--구매 수량 최대값 찾기
+      INTO maxval 						--조회결과를 일반 변수에 저장
+   FROM tbl_buy; 						--다음 문의 조건식으로 사용함
+
+   SELECT customid
+      INTO cid							--조회결과를 일반 변수에 저장
+   FROM tbl_buy
+   WHERE quantity = maxval;
+--최대값을 가지고 고객의 아이디를 찾는구나
+  
+   SELECT name,age 
+      INTO p_name , p_age   		--출력 매개변수에 저장
+   FROM "TBL_CUSTOM" tc 
+   WHERE CUSTOM_ID =cid;
+  --고객의 아이디로 고객의 이름과 나이를 찾는구나
+END;
+
+
+
+--프로시저 실행: 출력 매개변수가 있는 프로시저
+DECLARE 
+	VNAME TBL_CUSTOM.NAME %TYPE;
+	VAGE TBL_CUSTOM.AGE %TYPE;
+BEGIN
+	MAX_CUSTOM(VNAME,VAGE);
+	DBMS_OUTPUT.PUT_LINE(CHR(10));
+	DBMS_OUTPUT.PUT_LINE('=고객이름: ' || VNAME);
+	DBMS_OUTPUT.PUT_LINE('=고객나이: ' || VAGE);
+END;
+
+-------------------
+
+저장 프로시저에서 선언할때마다 ; 붙여줘야함(익명에서는 X)
+프로시저 오류 수정은 직접 해당 파일로 들어가서 DECLARATION에서 수정해야함
+
+프로시저에서도 조인써도됨
+출력코드: dbms_output.put_line('결과 : ' || vresult );
+
+-테이블복사 : PK, FK는 복사 안됨
+CREATE TABLE p_buy
+AS
+SELECT * FROM TBL_BUY tb ;
+
+isSuccess :='success';			-- 프로시저에서 일반변수 대입문 기호 :=
+
+
+
+-- 실행을 위해서 시퀀스 생성, money 컬럼 추가
+CREATE SEQUENCE pbuy_seq START WITH 1500;
+ALTER TABLE p_buy ADD money number(7) CHECK (money >=10000); --MONEY= 수량*가격 총 구매금액 컬럼
+
+-- 웹애플리케이션(인터넷 환경) 개발할 때, JDBC 에서 사용자가 원하는 기능 요청 하나에 sql을 1개씩만 실행을 합니다.
+--					   프로시저를 이용하면 요청 한번에 대해 많은 SQL을 실행을 할수 있습니다.
+--JDBC:JAVA BATABASE CONNECTION . 자바와 DB(오라클, MYSQL..)를 연결하는 프로토콜
+-- 데이베이스관점에는 `무결성`(정확성) 을 유지할 수 있는 방법.
+-- 프로시저에서 트잰잭션을 관리하는 예시: 최소구매금액 10000미만이면 트랜잭션을 롤백하는 예시
+CREATE OR REPLACE PROCEDURE proc_set_money(	  --IN,OUT 입력출력 여부
+	acustom_id IN P_BUY.CUSTOMID %TYPE, --  회원ID		-- 입력 매개변수 IN
+	apcode IN P_BUY.PCODE %TYPE, 	-- 상품코드
+	acnt IN P_BUY.QUANTITY %TYPE, 		-- 수량
+	isSuccess OUT varchar2 -- 출력 매개변수 OUT. 트랜잭션 처리 성공여부 저장. 
+)
+IS 
+	vseq NUMBER;	--변수선언
+	vprice NUMBER;
+BEGIN 
+	INSERT INTO p_buy(buy_IDX,CUSTOMID,PCODE,QUANTITY,BUY_DATE)
+		values (pbuy_seq.nextval, acustom_id,apcode,acnt,sysdate);	-- 매개변수값으로 INSERT
+		
+	SELECT pbuy_seq.currval 		-- 방금 INSERT한 현재 시퀀스 값 조회
+		INTO vseq
+		FROM dual;
+	dbms_output.put_line('방금 INSERT한 현재 시퀀스 값 조회'||VSEQ);	
+
+	SELECT price 
+		INTO vprice 
+		FROM tbl_product tp WHERE pcode=apcode;		-- 상품코드에 대한 가격 조회
+		dbms_output.put_line('방금 INSERT한 현재 상품 값 조회'||VPRICE);
+	UPDATE p_buy SET money = vprice * QUANTITY 
+		WHERE BUY_IDX = vseq;						-- 위 INSERT 한 데이터로 가격*수량 수식 구해서 money 컬럼값 수정
+		
+	dbms_output.put_line('실행 성공');		--값이 만원 이상일때만 성공
+	isSuccess :='success';			-- 프로시저에서 일반변수 대입문 기호 :=
+	commit ;
+	EXCEPTION 			-- EXCEPTION 추가하여 처리 -> 메시지 출력, rollback 
+		WHEN OTHERS THEN 
+		dbms_output.put_line('실행 실패'); --만원 미만 실패
+		rollback ;		-- 오류가 발생한 sql 앞의 insert,update,delete를 취소.
+		isSuccess :='fail';
+END;
+
+
+
+-- 실행 예시
+DECLARE 
+	vresult varchar2(20);
+BEGIN
+	-- 메시지는 'fail' 이고 p_buy 테이블 insert 입력값 없어야 합니다.
+proc_set_money('twice','SNACK99',1,VRESULT); 
+	
+	--메시지는 성공이고 P_BUY 테이블에 값이 INSERT 됨
+	--proc_set_money('mina012','SNACK99',3,VRESULT); 
+	dbms_output.put_line('결과 : ' || vresult );
+END;
+
+

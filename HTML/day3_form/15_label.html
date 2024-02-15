@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <!-- label은 *input, select 입력 요소와 연결시켜 포커스*를 갖도록 할 수 있음 ->tab키로 이동 가능, 스페이스로 선택 - 모바일에서 유용
+        하나의 인터페이스로 두가지 기능을 지는 것 = 토글기능
+        원래는 입력요소에 대한 텍스트 제목.. -->
+        <form action="success.html">
+            <label for="userid">아이디</label>
+            <input type="text" name="userid" id ="userid" placeholder="아이디를 입력하세요">
+            <label for="password">패스워드</label>
+            <input type="password" name="password" id ="password" placeholder="비밀번호를 입력하세요">
+            <!-- type과 name은 달라도 됨, 상관없음 -->
+            <!-- 포커스를 갖도록 하기 위해 id 속성 값과 for속성값을 동일하게 함 
+                id 속성값은 유일한 값
+                복습: class 속성값은 동일한 경우 모두(여러개)를 처리함(css)
+                        id 속성값은 하나의 요소만 처리할 때 사용, 동일한 값이 여러개인 경우에도..-->
+            <input type="checkbox" name="favorite" value="의류" id="a1"> 
+            <label for="a1">의류</label>
+            <input type="checkbox" name="favorite" value="스포츠용품" id="a2"> 
+            <label for="a2">스포츠용품</label>
+            <input type="checkbox" name="favorite" value="식료품" id="a3"> 
+            <label for="a3">식료품</label>
+            <input type="checkbox" name="favorite" value="잡화" id="a4"> 
+            <label for="a4">잡화</label>
+            <input type="checkbox" name="favorite" value="전자제품" id="a5">
+            <label for="a5">전자제품</label>
+
+            <button>주문</button>
+        </form>
+    
+</body>
+</html>

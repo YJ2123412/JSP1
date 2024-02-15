@@ -1,0 +1,226 @@
+day21
+
+pk가 행을 식별-> pk의 값을 가져오면 그 행의 데이터를 다 가져올 수 있음
+delete from tbl_buy where BUY_IDX =?
+
+
+
+
+-인터페이스
+ResultSet
+next() - > 중요. 처음에 꼭 한번 실행시켜야 함.. 초기포인터는 밖에있기에..
+다음 레코드로 이동, 레코드(행)가 있다면 true를 반환
+while (rs.next())  ->읽어올 다음 넥스트가 있으면 참,없으면 트루
+
+getInt(columnIndex), getString(columnIndex)
+getxxx(int columnIndex)  : 지정된 컬럼 인덱스의 값을 가져옴
+
+next, get 중요
+
+대문자만 써도 코드 추천나옴
+
+ResultSet rs = pstmt.executeQuery(); // 쿼리 실행한 결과 행 집합을 처리하는 인터페이스: ResultSet <-쿼리의 리턴을 받음
+rs.next(); //결과 행 집합의 첫번째 행을 접근하기 위해 꼭 한번은 실행해야 할 메소드
+
+System.out.println(rs.getDate(5)); ->5번 인덱스 컬럼 값 가져오기 java.sql.Date 를 리턴함 -> 날짜만
+System.out.println(rs.getTimestamp(5)); -> 시간도 나옴
+
+System.out.println(rs.getString("cusetom_id"));  컬럼명을 적어도됨 or 인덱스
+ResultSet rs = pstmt.executeQuery(); // 쿼리 실행한 결과 행 집합을 처리하는 인터페이스: ResultSet <-쿼리의 리턴을 받음
+
+
+
+-모든 행(데이터) 조회
+ Connection connection = OracleConnectionUtil.getConnection();
+        String sql = "select * from tbl_custom";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery();
+            int count=0;
+            while (rs.next()) { //읽어올 다음 넥스트가 있으면 참,없으면 트루
+                System.out.println("no: "+count++);
+                System.out.println(rs.getString("custom_id")); 
+                System.out.println(rs.getString("name")); 
+                System.out.println(rs.getString("email")); 
+                System.out.println(rs.getInt("age")); 
+                System.out.println(rs.getDate("reg_date")); 
+                System.out.println(rs.getTimestamp("reg_date"));
+            }
+        } catch (SQLException e) {
+            System.out.println("select Query 실행 예외 발생 ~!!"+e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
+
+
+---
+1. rs.next()로 결과행 집합안에서 레코드 위치 이동확인
+public static void selectAll_1() {
+        Connection connection = OracleConnectionUtil.getConnection();
+        String sql = "select * from tbl_custom";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery(); 
+            rs.next(); //결과 행 집합의 첫번째 행을 접근하기 위해 꼭 한번은 실행해야 할 메소드
+            //next 실행때마다 rs 객체의 다음 행을 가리키게 되어있음(포인터 이동)
+            System.out.println(rs.getString(1)); //1번 인덱스 컬럼 값 가져오기
+            System.out.println(rs.getString(2)); //2번 인덱스 컬럼 값 가져오기
+            System.out.println(rs.getString(3)); //3번 인덱스 컬럼 값 가져오기
+            System.out.println(rs.getInt(4)); //4번 인덱스 컬럼 값 가져오기
+            System.out.println(rs.getDate(5)); //5번 인덱스 컬럼 값 가져오기 java.sql.Date 를 리턴함
+            System.out.println(rs.getTimestamp(5));
+
+            rs.next(); //결과 행 집합의 첫번째 행을 접근하기 위해 꼭 한번은 실행해야 할 메소드
+            //next 실행때마다 rs 객체의 다음 행을 가리키게 되어있음(포인터 이동)
+            System.out.println(rs.getString(1)); //1번 인덱스 컬럼 값 가져오기
+            System.out.println(rs.getString(2)); //2번 인덱스 컬럼 값 가져오기
+            System.out.println(rs.getString(3)); //3번 인덱스 컬럼 값 가져오기
+            System.out.println(rs.getInt(4)); //4번 인덱스 컬럼 값 가져오기
+            System.out.println(rs.getDate(5)); //5번 인덱스 컬럼 값 가져오기 java.sql.Date 를 리턴함
+            System.out.println(rs.getTimestamp(5));
+        } catch (SQLException e) {
+            System.out.println("select Query 실행 예외 발생 ~!!"+e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void selectAll_2(String[] args) {
+        //2. rs.next()를 반복하여 레코드 끝까지 위치 이동
+        Connection connection = OracleConnectionUtil.getConnection();
+        String sql = "select * from tbl_custom";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery();
+            int count=0;
+            while (rs.next()) { //읽어올 다음 넥스트가 있으면 참,없으면 트루
+                System.out.println("no: "+count++);
+                System.out.println(rs.getString("custom_id")); 
+                System.out.println(rs.getString("name")); 
+                System.out.println(rs.getString("email")); 
+                System.out.println(rs.getInt("age")); 
+                System.out.println(rs.getDate("reg_date")); 
+                System.out.println(rs.getTimestamp("reg_date"));
+            }
+            System.out.println("총 " +(count-1) +"개의 레코드 행을 조회했습니다");
+        } catch (SQLException e) {
+            System.out.println("select Query 실행 예외 발생 ~!!"+e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
+   public static void selectAll_3(){
+        //3. 레코드 행 1개를 자바 객체와 1:1로 매핑하기, 조회결과를 자바 객체로 만들어야 프로그램 개발 가능
+        Connection connection = OracleConnectionUtil.getConnection();
+        String sql = "select * from tbl_custom";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)){
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                CustomerVo vo = new CustomerVo(rs.getString(1), 
+                                                rs.getString(2),
+                                                rs.getString(3),
+                                                rs.getInt(4),
+                                                rs.getDate(5));
+                System.out.println(vo);
+            }
+        } catch (SQLException e) {
+            System.out.println("select Query 실행 예외 발생 ~!!"+e.getMessage());
+            e.printStackTrace();
+        };
+
+
+
+
+
+
+    public static List<CustomerVo> selectAll_4() {
+    //4. 레코드 행 1개를 자바 객체와 1:1로 매핑하기  -> 레코드 행이 많다면 list에 저장하기
+    List<CustomerVo> list = new ArrayList<>();
+    Connection connection = OracleConnectionUtil.getConnection();
+    String sql = "select * from tbl_custom";
+    try (PreparedStatement pstmt = connection.prepareStatement(sql)){
+        ResultSet rs = pstmt.executeQuery();
+        while (rs.next()) {
+            CustomerVo vo = new CustomerVo(rs.getString(1), rs.getString(2), rs.getString(3),
+                                            rs.getInt(4), rs.getDate(5));
+            list.add(vo);
+        }
+        //dao 메소드에는 특별한 목적이 아니면 출력문을 만들지 않음
+       // System.out.println("Select 결과 List"+list);
+    } catch (SQLException e) {
+        System.out.println("select Query 실행 예외 발생 ~!!"+e.getMessage());
+        e.printStackTrace();
+    };
+    return list; //select 조회 결과를 java객체 list와 매핑한 결과과
+}
+
+
+
+
+PreparedStatement는 변수가 있어도 됨
+그냥 Statement는 변수가 있으면 안됨 sql이 완벽한 상태여야 함
+
+//dao 메소드에는 특별한 목적이 아니면 출력문을 만들지 않음
+테이블 select 결과를 메소드 실행하여 받으면 그 데이터는 콘솔에서 출력, 브라우저화면 출력,다른 목적으로 사용될 수 있으므로 출력문 넣지 말기
+출력은 실행하는 쪽에서,...
+
+1. vo 선언
+ vo= new CustomerVo(rs.getString("custom_id"),rs.getString("name"),
+rs.getString("email"),rs.getInt("age"),rs.getDate("reg_date"));
+list.add(vo);
+
+2. vo 선언 없이 list에 추가
+list.add(new CustomerVo(rs.getString("custom_id"),rs.getString("name"),
+rs.getString("email"),rs.getInt("age"),rs.getDate("reg_date")));
+
+
+메소드 이름에 단복수 s 주의
+
+스캐너 보다는 콘솔.readline이 좋음 ->스캐너는 임폴트 해야하고, 엔터를 가짐..
+리턴타입을 가진 메소드는 결과를 객체에 담아야 함. 그리고 해당 객체를 출력...
+
+
+
+
+
+
+컬럼 조회 결과가 1개일지 1개이상일지에 따라 미래를 고려하여 리턴형식을 고려하기
+
+
+
+SQL 
+ DISTINCT  중복제거
+SELECT DISTINCT  CATEGORY 
+FROM  TBL_PRODUCT
+ORDER  BY CATEGORY ASC; 
+
+
+
+LIKE '%'||'사과'||'%'
+LIKE '%사과%'  로 하면 변수를 받을 수 없기에 ||로 흩어지게 함 -> 자바로 옮길때 ''빼기 = LIKE '%'||?||'%'
+
+executeUpdate() write용 executeQuery() read용
+
+//static이 많아지면 상속의 특징을 사용할 수 없음, 멀티 스레드 환경에서도 부적합
+이후 상속받을거면 인스턴스로 바꿔서..
+
+
+
+생성자 내에는 컬럼 이름만(테이블 이름 x)
+
+
+2월 1일 오후- 자바 , sql 1시간씩
+
+
+        System.out.println("[B] 구매하기   [D] 구매 취소   [Q] 구매 수량 변경  [X] 구매 종료"
+
+sql문 안에는 ; 빼기
+ 
+
+----------------------
+자바 시험 피드백 -> 요구사항에 없는 것은 만들지 않는다
+생성자 생성 못했음
+ride, power 인자 정의 오류
+불필요한 setter
+
+
+

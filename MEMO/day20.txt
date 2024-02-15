@@ -1,0 +1,149 @@
+테이블.컬럼명%type -> 타입 똑같이
+
+인자로 들어가는 매개변수에는 크기를 주지 않음 ()안에 () 쓰면 오류 나기에..
+IS에서는 %TYPE 혹은 크기까지..
+
+프로시저
+-조회 결과가 N개의 행이면 프로시저의 커서 기능을 이용
+-INTO는 프로시저에서만 사용(조회결과 저장을 위해)
+-프로시저에서는 조회결과가 없는 경우 예외로 처리할 수 있음
+
+   WHERE CUSTOMID = p_id AND TO_CHAR(BUY_DATE,'YYYY-MM-DD') = p_date;
+
+BUY_DATE 는 DATE 타입이기에 문자열과 비교하려면 TO_CHAR로 바꿔야함
+
+
+chr(10) 줄바꿈 
+------------
+
+JDBC 
+자바와 DBMS를 연결하고 데이터 베이스 접근을 제공하는 API.
+DBMS는 JDBC를 지원하는 라이브러리를 제공함
+
+url ->디비버에서 연결 설정->main의 custom
+
+cmd에서 ip 찾기 : ipconfig - 192.168.181.8
+
+--------------------------------------------------- 
+팀별로 연습하기
+-주제: 키오스크(타이핑), 단어장, 주소록, 
+	테이블1~3개 (주문- 1번째, 매출- 2번째, 이벤트 -3번째 .... 예시) 
+-간단한 jdbc 연습 프로그램	
+ 1. 주제를 조별로 통일 (테이블 구조와 데이터 동일)
+ 2. 샘플 데이터는 조원들끼리 나눠서 입력 (햄버거 종류..)
+ 3. 코딩은 각자 (DML 연습)하면서 서로 질의응답
+ 4. main 프로그램이 메뉴 선택 등 인터페이스 만드는 과정이 복잡해질 것으로 예상..
+    jdbc는 기본 형식에 따라 합니다.
+
+진도 1.5일		, 조별 프로그램 1.5일 ->수요일 마무리....
+
+
+
+
+PrepatredStatement - 미리 컴파일, 매개변수에 들어갈 값 바인딩만 하면 됨  ->더 안전
+Statement - 
+
+VO 객체의 date는 null이어도 ㄱㅊ
+
+try() 안에 넣으면 auto close 됨
+
+매개변수의 ? 는 순서대로 1..
+
+
+
+---
+커넥션
+package jdbc.day1;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class OracleConnectionUtil {
+    public static final String DRIVER ="oracle.jdbc.driver.OracleDriver";
+    public static final String URL ="jdbc:oracle:thin:@//localhost:1521/XE";
+    public static final String USERNAME ="C##IDEV";
+    private static final String PASSWORD= "1234";
+
+
+    //connection 타입 객체 생성하는 메소드
+    //Connection conn = OracleConnectionUtil.getConnection();  로 사용할 것
+    public static Connection getConnection(){
+         Connection conn = null;
+        try { 
+            Class.forName(DRIVER);  
+            conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        } catch(Exception e){
+            System.out.println("데이터베이스 연결 예외 발생했습니다. \n\t : "+e.getMessage());
+        }
+        return conn;
+    }
+    //실행순서: 1)getConnection  2)sql 실행  3) close 
+    //SQL 실행: 개발프로그램에서 가장 많이 실행하는 SQL은 DML(select,insert,delect,update)
+    //          OracleConnectionUtil는 1, 3 단계에서 사용될 것
+
+
+
+    //인자로 전달된 connection 객체를 close. sql 실행이 종료되면 close 해야 함.
+    public static void close(Connection conn){
+        try {
+            if(conn !=null) conn.close();
+        } catch (SQLException e) {
+            System.out.println("데이터베이스 연결 해제 예외 발생\n\t: "+e.getMessage());
+        }
+    }
+
+}
+
+
+오라클 서버와 자바의 연결
+1. 서버로그인(연결)
+public class TblCustomerDao {
+
+public static final String URL ="jdbc:oracle:thin:@//localhost:1521/xe";
+public static final String USERNAME = "c##idev";
+private static final String PASSWORD = "1234";
+
+private Connection getConnection() throws SQLException {
+return DriverManager.getConnection(URL, USERNAME, PASSWORD); }
+
+2. 필수 
+public void join(CustomerVo vo){
+   String sql="insert into tbl_custom(custom_id,name,email,age,reg_date) " +  "values (?, ?, ?, ?, sysdate)";
+//한줄인데 보기 편하려고 + 했을뿐...  sql문을 작성하면 됨
+
+Connection connection = getConnection();  ->오라클 서버와 연결
+PreparedStatement pstmt = connection.prepareStatement(sql);) ->오라클 서버에 sql 문 전달 (try문에 꼭)
+
+
+매개변수 바인딩 (매개변수 타입에 맞는 메소드를 실행) - 매개변수의 ? 는 순서대로 1, 2, 3 ... 
+sql문에서 값을 가져야 하는 것들을(받아야하는 것들을) ? 로 적어둔 후, set을 통해서 값을 넣음
+pstmt.setString(1, vo.getCustomId());
+pstmt.setString(2, vo.getName());
+pstmt.setString(3, vo.getEmail());
+pstmt.setInt(4, vo.getAge());
+
+pstmt.executeUpdate(); ->실행!!!!!!!!!!!꼭 필수
+        } catch (SQLException e) {
+            System.out.println("join 실행 예외 발생 : " + e.getMessage());
+        }//close는 자동으로 합니다. finally 없음
+    }
+
+
+
+
+- VO
+//Value Object: 데이터 형식으로서 정의되는 클래스
+//ㄴprivate 필드, 값 초기화 커스텀 생성자, getter, hashcod와 equals재정의 
+//객체생성시 값을 초기화 한 후 변경할 수 없으며, 필드값이 같으면 같은 값으로 처리되는 객체
+public class CustomerVo {        //tbl_custom 테이블의 컬럼과 1:1 대응되는 변수로 정의
+
+
+
+
+
+
+
+
+
+

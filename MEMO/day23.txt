@@ -1,0 +1,71 @@
+day23
+
+-DB
+%TYPE ->TYPE 만 복사
+OUT 밖에 결과물로 줄거야
+IN 밖에서 값을 받아와서 쓸거야
+BEGIN 안 SELECT문들은 각각이지만 해당 결과물을 사용하기에 연결되어있는 것처럼 보임
+
+
+-Java
+프로시저 실행 및 관리 인터페이스: CallableStatement의 메소드 prepareCal()로 실행하기
+
+IN,OUT의 인덱스는 합쳐서 세기+*+
+프로시저 실행결과 out 파라미터 1번 인덱스의 타입 지정하기 - 고객이름
+cstmt.registerOutParameter(1, Types.VARCHAR); //Types.VARCHAR ->DBMS의 타입
+프로시저 실행결과 out 파라미터 2번 인덱스의 타입 지정하기 - 고객나이
+cstmt.registerOutParameter(2, Types.NUMERIC);
+cstmt.executeUpdate();
+프로시저 실행결과 OUT 파라미터 값은 cstmt 객체에 저장
+
+IN일때  -set
+cstmt.setString(2, buydate);
+
+OUT일때 -Out
+cstmt.registerOutParameter(3, Types.NUMERIC);
+cstmt.executeUpdate();  <- 필수
+
+
+
+cstmt.registerOutParameter(1, Types.VARCHAR); //
+Types.VARCHAR ->DBMS의 타입
+number = NUMERIC
+
+String sql = "" <-에 프로시저 sql 전달 => "{call 프로시저 이름(매개변수)}"
+String sql = "{call money_of_day2(?,?,?)}";
+
+""; 하고서 사이에 sql문 넣으면 자동으로 줄 나뉨
+"" 안에는 ; 쓰면 안됨
+
+out 실행 결과값 가져오기(타입+해당 인덱스)
+System.out.println("고객 이름: " +cstmt.getString(1));
+System.out.println("고객 나이: "+cstmt.getInt(2));
+          
+
+rs.next()  <<필수 rs를 한번 실행시켜서 값을 가져와야함
+
+
+
+
+DB관점에서의 사용자 - 개발자+일반사용자
+개발자 관점에서의 사용자 - 일반사용자
+
+
+
+
+
+
+
+
+
+
+
+
+-------------
+vo의 초기화 생성은 null로 해두기
+
+조건에도 vo == null 이런식으로 체크.. 0, 0, 0, 이런 값으로 만들지 않기
+
+
+엑셀로 자료만들고 csv로  sql에 전달하면 값 추가 가능
+

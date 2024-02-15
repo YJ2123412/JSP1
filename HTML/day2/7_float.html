@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7_FLOAT</title>
+    <style>
+        /*float 속성은 block요소의 배치를 인라인 요소와 같이 같은 라인에 배치 - 줄바꿈없이 나열
+        5_position.html 예제는 부모 div에 크기가 있었음
+        해당 예제에서는 크기 없음(너비는 100, 높이는 0이 default) 
+        div안에 div자식있을때, 자식크기만큼 부모가 커지지 않음(블록요소 안에 블록요소가 있는 경우 내용만큼 높이가 커지지 않음)
+        자식요소만큼 영역(높이)을 설정하려면 overflow: hidden; 사용
+         */
+         /* 클래스 이름이 first, second 인 요소에 스타일 적용   , 로 나열가능 */
+        .first, .second{
+            background-color: rgb(226, 226, 87);
+            /* 블록 요소 안에 블록 요소가 있을때 많이 씀, 보통 부모에 크기 안주고 자식에 줌->같이 커지기에 */
+            overflow: hidden;
+        }
+
+  
+        /* 선택자 기호 >  : 자식요소  / first 클래스 이름 요소의 자식태그 div를 지칭*/
+        .first > div{
+            float: left;
+            box-sizing: border-box;
+            width: 15rem;
+            height: 15rem;
+            border: 2px dashed brown;
+            margin: 2rem;
+        }
+        /* float 방향에 따라 시작 지점이 달라짐 */
+        .second > div{
+            float: right;
+            box-sizing: border-box;
+            width: 15rem;
+            height: 15rem;
+            border: 2px dashed rgb(86, 227, 58);
+            margin: 2rem;
+        }
+
+    </style>
+
+
+
+
+
+</head>
+<body>
+    <div class ="first">
+        <div>I</div>
+        <div>am</div>
+        <div>...??</div>
+        <div>안녕</div>
+        <div>H1~Hello</div>
+    </div>
+    <div class ="second">
+        <div>I</div>
+        <div>am</div>
+        <div>...??</div>
+        <div>안녕</div>
+        <div>H1~Hello</div>
+    </div>
+
+
+
+
+
+
+    
+</body>
+</html>

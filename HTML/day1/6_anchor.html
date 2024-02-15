@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6_anchor</title>
+</head>
+<body>
+    <h3>A (anchor) 태그</h3>
+    <p>HTML: HyperText Markup Language<br>
+       Hypertext: 웹페이지를 넘나들며 화면을 바꿀 수 있는 방식으로 동작 <br>
+       a 태그는 href 속성값을 설정하여 이동할 웹페이지를 지정하고 화면을 바꿈<br>
+    </p>
+    <ul>
+        <li>
+            <a href="https://www.naver.com" target="_blank">네이버</a>
+        </li>
+        <li>
+            <a href="https://www.google.com" target="_blank">구글</a>
+        </li>
+        <li>
+            <a href="http://127.0.0.1:5500/day1/5_position.html">5_position.html(전체주소)</a>
+        </li>
+        <li>
+            <!-- 위의 전체 주소는 현재 페이지의 http://127.0.0.1:5500/day1/6_anchor.html와 같은 서버와 포트주소를 사용하므로
+                 이부분은 생략하고 표기함 (상대주소)-->
+            <a href="5_position.html">5_position.html(파일명)</a><br>
+            <!-- 현재 폴더 day1의 부모로 가기 : ..
+                test는 day1의 형제
+            그리고 test 폴더로 가서 anchorTest.html열기 
+            http://127.0.0.1:5500/day1/test/anchorTest.html(절대주소)-->
+            <a href="test/anchorTest.html">anchorTest.html Go!</a>
+                <!-- 부모폴더: ../
+                     현재폴더: ./
+                     자식폴더: 폴더명/ 파일명 -->
+        </li>
+
+
+    </ul>
+    
+</body>
+</html>

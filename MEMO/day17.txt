@@ -1,0 +1,225 @@
+ * 집계함수 count, avg , sum, min, max 등 그룹 함수라고도 합니다. 
+ * 그룹화 - 지정한 컬럼값이 같을 것을 갖는 행에 대해 집계 함수를 실행합니다.
+ *      
+ * 순서 중요
+ * select 
+ *       그룹화컬럼, 그룹함수
+ * from 테이블이름
+ * [WHERE] 그룹화하기 이전의 조건식
+ * GROUP BY 그룹화에 사용할 컬럼명   ->뭉칠 중심이 될 컬럼
+ * [HAVING] 그룹화 후에 그룹화 결과값을 사용하는 조건식
+ * [ORDER BY] 정렬 컬럼 
+
+--예시1) 학번(학생)별로 수강한 갯수와 평균 조회하기
+SELECT STUNO, COUNT(*),AVG(JUMSU) FROM TBL_SCORE ts 
+GROUP BY STUNO;
+
+--2) 위의 결과에 대해 평균이 80점 미만인 학번(학생) 조회하기
+SELECT STUNO, COUNT(*),AVG(JUMSU)
+FROM TBL_SCORE ts 
+GROUP BY STUNO
+HAVING AVG(JUMSU) <80;  --HAVING은 집계함수 결과에 대한 조건식/ 
+
+--점수가 80점 이상 데이터만 예시 1번을 실행한다면 WHERE JUMSU >=80 GROUP BY STUNO
+SELECT STUNO, COUNT(*),AVG(JUMSU) FROM TBL_SCORE ts 
+WHERE JUMSU >=80
+GROUP BY STUNO;
+
+--4) 학기별-교사별 COUNT, AVG 조회하기
+SELECT TERM ,TEACHER , COUNT(*), AVG(JUMSU)  
+FROM TBL_SCORE ts 
+GROUP BY TERM , TEACHER ;
+
+--학기별로 그룹에 적어 그룹화하고, 2차로 학기가 같은 선생님별로 그룹화.. 그 후에 셀렉트에 적기
+
+
+
+
+
+
+
+
+
+* 테이블 구조 변경 : ALTER TABLE
+오라클 객체 생성 이후 변경사항은 ALTER 명령어로 함
+ * 참고: 오라클에서는 테이블, 컬럼명 등 식별자 이름에 쓸 수 있는 기호: _  #  $  세가지
+
+--CONSTRAINT 제약조건이름(선택) 제약조건내용
+
+-- alter table [변경내용키워드] : 
+-- 1) *컬럼 이름 변경 : rename column 
+-- 2) 테이블 이름 변경 : rename to 
+-- 3) *새로운 컬럼 추가 : add
+-- 4) *컬럼 데이터 형식 변경 : modify
+-- 5) *제약 조건 추가 : add constraint  
+-- 6) 기존 컬럼 삭제 : drop
+-- 7) *기존 제약 조건 삭제 : drop constraint 제약조건이름
+
+
+-- alter table   테이블명 [변경내용키워드]  (변경내용)  
+--1)컬럼 이름 변경                 현재이름 to 새로운 이름
+ ALTER TABLE tbl# RENAME COLUMN coL2 TO col22;  
+ ALTER TABLE tbl# RENAME COLUMN coL22 TO col2;  
+
+
+-- 2) 아래 컬럼 추가하면 기존 row(행)들도 값이 추가된 컬럼5 의 값 100
+ALTER TABLE tbl# ADD (column5 NUMBER(5) DEFAULT 100); -- 예 : 기본값 100
+-- 2) 변경후에 데이터 추가합니다.
+INSERT INTO tbl#(col1,col2) VALUES ('테스트11','테스트');
+
+
+
+- 컬럼추가 : column6 가변문자열(20) 기본값 'guest' 로 변경해보세요.
+ALTER  TABLE tbl# ADD (column6 VARCHAR(20) DEFAULT 'guest');
+- 아래 데이터 추가 후 확인
+INSERT INTO tbl#(col1,col2) VALUES ('게스트1','게스트2');
+
+4) 기존 컬럼 형식 변경
+ALTER TABLE tbl# MODIFY (col2 varchar2(50)); 
+
+5) 제약조건 추가
+-NOTNULL
+ALTER TABLE tbl# MODIFY COL3 VARCHAR2(50) NOT NULL;
+-유니크 넣기
+ALTER TABLE Persons ADD UNIQUE (ID);
+-유니크 여러개 넣기
+ALTER TABLE Persons ADD CONSTRAINT UC_Person UNIQUE (ID,LastName)
+
+-- 7) 제약조건 제거 - ADD와 DROP만 있음
+ALTER TABLE tbl# DROP CONSTRAINT tbl#_notnull3;
+
+-- 제약조건 키워드없는 not null 을 null로 변경할 때
+ALTER TABLE tbl# MODIFY COL2 VARCHAR2(50) NULL;
+
+-- col3 데이터 모두 채운 후에 실행확인 해보세요. null -> not null로 변경
+
+
+
+
+
+
+
+-DML: SELECT, INSERT, UPDATE, DELETE - 테이블의 행 데이터에 대한 조작
+한번 더 생각할 것은 기본키가 필요한 이유: 행 식별
+
+-UPDATE 테이블명 SET 컬럼명1= 변경할 값, 컬럼명2 = 변경할 값... WHERE 조건식
+-예시 미나가 구매한 DOWON123a의 수량을 모두 10으로 변경하기
+
+UPDATE TBL_EXBUY SET BUY = 10
+WHERE ID = 'hongGD' AND PRODUCTCODE ='DOWON123a';
+
+-BUYIDX가 1001인 것의 구매수량을 5로 바꿈 -> 수정 또는 삭제될 조건식 컬럼이 PK 컬럼(행식별)일때에는 반드시 1개의 행만 수정이 적용됨
+-PK가 아니면 개수 제한 X
+-WHERE 조건 없는 SQL은 신중하게, 꼭 필요할떄만 사용하기
+
+
+
+
+
+-DELETE FROM 테이블명 WHERE 조건식 - 행전체 삭제
+DELETE FROM TBL_EXBUY te WHERE BUYIDX = 1001;
+
+-최종 결론: PK 컬럼은 응용프로그램 개발할때에는 없으면 안되는 컬럼
+행식별을 하여 조회 SELECT, 수정 UPDATE, 삭제 DELETE에 반영되는 행을 지정할 수 있음
+------------------------------------------------------------------------------
+
+-트랜잭션: INSERT, UPDATE, DELETE에서 반드시 하나의 단위로 처리해야할 작업단위
+(같이 묶어서 하겠다고 처음부터 계획함) -편의성이 아니라 정보의 무결성과 안정성을 위해서 사용
+
+-UPDATE가 2개의 명령어로 실행할 때 2개 모두 실행 또는 2개 모두 실행이 안되거나 해야하는 트랜잭션입니다.
+-자동 커밋:INSERT, UPDATE, DELETE가 바로 테이블에 반영되는 것
+
+-수동 커밋:INSERT, UPDATE, DELETE가 바로 반영되지 않고 COMMIT해야 실행
+		INSERT, UPDATE, DELETE 명령 트랜잭션 취소는 ROLLBACK
+
+
+
+디비버 사용자가 추가한 INSERT는 커밋을 해야 SQLPLUS 사용자에게 보입(반영)니다.
+수동 커밋상태에서 SQL PLUS 실행, 계정 접속하기 -> 커밋전 상태로 보임
+	
+시퀀스는 이미 증가, 롤백과 관련없음
+
+-SQL PLUS
+명령보기 : SHOW AUTOCOMMIT;
+명령 설정: SET AUTOCOMMIT OFF(ON);
+테이블의 제약조건 이름 확인하기 : SELECT * FROM USER_CONSTRAINTS;
+
+
+
+디비버에서 AUTO COMMIT 해제하기 -> 데이터베이스 메뉴 ->트랜잭션모드
+
+롤백: ROLLBACK;
+처리완료: COMMIT;
+
+
+
+
+커밋후에도 롤백할 수 있음
+ 데이터의 무결성을 유지시켜줌
+프로그램 끄면 가상 메모리에 남아있던건 날아감
+
+단점은 무겁다
+
+
+
+-- ((참고))테이블의 제약조건 이름 확인하기 : 오라클의 시스템 테이블
+SELECT CONSTRAINT_NAME FROM USER_CONSTRAINTS;
+
+--ALTER TABLE로 COL1을 PRIMARY KEY로 변경해보기, 후에는 FK도 설정할 수 있어야함
+ALTER TABLE tbl# MODIFY COL1 varchar2(30) PRIMARY KEY;
+--기본키가 복합컬러명이라면 제약조건 추가 키워드(ADD CONSTRAINT) 써야 함
+ALTER TABLE tbl# ADD CONSTRAINT TBL#_PK PRIMARY KEY(COL1);
+
+CONSTRAINT 키워드는 테이블 수준
+키워드에는 컬럼 수준과 테이블 수준이 있음
+
+
+/*
+ 시퀀스: 오라클의 객체. 값을 자동으로 만들어줌
+ 일련번호로 사용하는 값에 사용
+ 목적: 행을 식별하기위해 (mysql은 시퀀스 없고 auto increment 속성으로 사용)
+ CREATE
+ * */
+
+--1. 시퀀스 생성
+CREATE SEQUENCE test_seq;
+
+--2. 시퀀스 사용을 위한 함수: nextval(다음 시퀀스 값), currval(현재 시퀀스 값)
+SELECT test_seq.nextval FROM dual;
+
+--현재 시퀀스 값은 nextval 을 처음 한번 꼭 실행한 후에(값이 만들어진 후) 실행가능
+SELECT test_seq.currval FROM dual;
+
+--3. 시퀀스 시작값을 바꾸기
+CREATE SEQUENCE TEST_SEQ2 START WITH 2001;
+
+--4. 증가값 바꾸기
+CREATE SEQUENCE TEST_SEQ3 INCREMENT BY 5;
+SELECT TEST_SEQ3.NEXTVAL FROM DUAL ; -- 실행시킬때마다 5씩 올라감
+
+
+
+
+--시퀀스를 컬럼에 넣는방법
+
+1. 시퀀스, 컬럼 만들기 2. 컬럼 PK로 만들기 3. INSERT VALUES에 컬럼명과 시퀀스.NEXTVAL넣기
+
+INSERT INTO TBL_EXBUY (ID, PRODUCTCODE, BUY, BUYDATE,BUYIDX)        
+VALUES('hongGD','DOWON123a', 1, TO_DATE('2021-10-21 11:13:25','YYYY-MM-DD HH24:MI:SS'),EXBUY_PK_SEQ.NEXTVAL);
+
+
+
+
+
+
+-테이블 키워드와 컬럼키워드의 차이
+
+
+
+
+
+
+
+
+
+

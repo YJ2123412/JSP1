@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>10_text.html</title>
+</head>
+<body>
+    <!-- form은 사용자 입력 양식을 만듬. 
+        사용자가 입력한 값을 구분하기 위한 식별자 'name' 속성   - 중요
+        사용자가 입력한 유형은 type 속성(화면에 표시되는 방법)
+        사용자가 입력한 값은 value 속성 - 기본값을 줄 수도, 안줄 수도 있음.
+        서버로 전송되는 url에 표시는 ? 속성 이름=값 / ?name = value
+    
+    
+    -->
+    <form action="success.html">
+        <input type="text" name ="search">
+        <input type="text" name ="search" value="item">
+
+        <!-- button은 1. form 태그 안/ 밖   2.안에 있을때는 type이 submit이냐 button이냐 -->
+        <!-- button 태그가 form안에 있을때 type이 생략되면 submit(제출- 서버로 데이터를 보내는 동작)으로 설정 -->
+        <button>전송</button>
+        <!-- type이 button일때는 자바스크립트 명령을 실행 -->
+        <button type="button">검색</button>
+
+        <!-- 오래된 형식 -->
+        <input type="button" value="테스트">
+
+
+    </form> 
+    <hr>
+    <button>form태그 밖에 있는 버튼</button>
+</body>
+<!--실행 결과: 입력요소에 아무 문자열이나 입력 후 전송 버튼클릭시 success.html로 페이지가 이동됨
+    입력문자열이 영어인 경우
+     http://127.0.0.1:5500/day3_form/success.html?search=english
+    한글인 경우 ->한글은 url에서 utf-8인코딩된 값으로 전달됨 (%EA = 1bye 16진수값.. 3개가 모여야 한글 1개가 됨)
+    http://127.0.0.1:5500/day3_form/success.html?search=%EA%B0%80%EB%82%98%EB%8B%A4%EB%9D%BC
+
+    'action' 속성 값은 데이터를 전달받을 url(백엔드주소)
+    html 파일은 정적페이지. 데이터 처리할 기능 X
+    웹 애플리케이션 서버단에서 데이터를 처리할 수 있는 jsp로 바뀌어야함
+
+-->
+</html>

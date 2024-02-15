@@ -1,0 +1,134 @@
+for(Product p:cart){
+            if(p !=null && p.price >=10000){
+                System.out.println(p);
+            }
+        }
+
+->>null 체크 중요!!!!
+
+
+자바교재 p204
+라이브러리 클래스: Prodauct, Bike, Electrinics -> 프로그래밍에 필요한 재료로 사용되는 클래스, 인스턴스메소드, static메소드+<자바 클래스>
+실행클래스: ProductApp ->main 메소드 포함, 실행 ->main은 반드시 static임 -> main 메소드를 위한 객체를 먼저 생성할 수 없다->그래서 static이 돼야함
+
+예시: Bike 클래스의 sell 메소드 Object 인자값은 외부에서 줌 -> 여기서 외부는 이 메소드를 사용하는 main 또는 다른 클래스를 말함
+라이브러리 클래스의 특히 인스턴스 필드값은 실행될때 결정됨
+
+main 없는 클래스 - 라이브러리 클래스
+main 있는 클래스 - 실행 클래스 ->main은 늘 static임
+
+
+
+String return은 ""로도 가능
+
+
+함수형 인터페이스
+함수형 인터페이스(Functional Interface)는 자바에서 람다식과 함수형 프로그래밍을 지원하기 위해 도입된 개념
+단 하나의 추상 메소드를 가지는 인터페이스
+이러한 인터페이스는 람다식을 통해 익명 함수를 생성하고, 함수를 변수에 할당하거나 매개변수로 전달하는 등의 함수형 프로그래밍 스타일을 지원
+
+메소드 시그니처 - >리턴타입, 메소드 이름, 메소드 인자 형식과 갯수
+
+쪽지시험
+7-1) comparator 인터페이스 예시로 참고
+
+
+
+
+
+
+
+ 테이블 조인: 테이블의 컬럼을 합하는 연산 (참고로 UNION 연산은 테이블의 행을 합하는 연산)
+
+ 조인1(크로스 조인) : SELECT * FROM TBL_CUSTOM, TBL_BUY; 
+-첫번째 테이블의 행에 BUY를 하나씩 다 넣음 (4X7=28): 모든 경우의 수
+-결과: 2개의 테이블 공통 컬럼인 CUSTOM_ID로 모든 경우의 수를 조합하여 합침 : 
+
+-조인2(동등 조인) : 조건식을 추가하여 컬럼 값이 같은 것만 조회
+1) SELECT * FROM 테이블1 , 테이블 2 WHERE T1.공통컬럼 = T2.공통컬럼;
+2)SELECT * FROM 테이블1 JOIN 테이블 2 ON T1.공통컬럼 = T2.공통컬럼;
+--1
+SELECT  * FROM TBL_CUSTOM tc ,TBL_BUY tb 
+WHERE TC.CUSTOM_ID = TB.CUSTOMID;
+--참고: 고객 중 한번도 구매하지 않은 이는 결과에 없음
+--2
+SELECT  * FROM TBL_CUSTOM tc JOIN TBL_BUY tb 
+ON TC.CUSTOM_ID = TB.CUSTOMID;
+
+
+조인3(외부조인):테이블2에 없는 값도 1에 있으면 조인에 포함시킴 / 값이 없으면 NULL
+-SELECT *FROM 테이블1 T1 LEFT OUTER JOIN 테이블2 ON T1.공통컬럼 = T2.공통컬럼;   OUTER 생략가능
+SELECT *
+FROM TBL_CUSTOM tc 
+LEFT JOIN TBL_BUY tb 
+ON TC.CUSTOM_ID = TB.CUSTOMID ;
+
+--구매이력이 없는 회원 검색
+SELECT TC.CUSTOM_ID, TC.NAME ,TC.EMAIL , TC.AGE 
+FROM TBL_CUSTOM tc 
+LEFT JOIN TBL_BUY tb 
+ON TC.CUSTOM_ID = TB.CUSTOMID  --조인 조건식(ON)
+WHERE TB.CUSTOMID IS NULL;	   --그 외의 조건식(WHERE)
+
+
+-조인4(외부 OUTER 조인) : 오라클에서만 사용하는 조인 형식 
+SELECT *
+FROM TBL_PRODUCT tp , TBL_BUY tb 
+WHERE TP.PCODE = TB.PCODE (+);          --NULL 값이 발생하는 테이블 컬럼에 +표시
+IS NULL과 IS NOT NULL은 '=' 쓰면 안됨
+
+
+-----------------------------------
+TP.*  ->테이블.* 가능
+GROUP BY-> 셀렉트에 쓰인 컬럼 모두 적어야함
+
+
+
+
+ 서브 쿼리(sub query): SELECT 조회 결과(여러개의 행)가 다른 DML 명령어에 쓰일 수 있음 
+ 					SELECT, INSERT, DELECT, UPDATE에 포함되는 SELECT를 서브쿼리라고 함
+ 					
+ SELECT와 함께 쓰이는 서브쿼리: SELECT 컬럼1, 컬럼2 FROM (SELECT...)
+ 											WHERE 컬럼명 1= 값(SELECT 결과)
+ 
+ SELECT 서브 쿼리는 JOIN으로 대체할 수 있음 (때에 따라..)
+
+--1) WHERE에서 쓰는 서브쿼리: TWICE가 구매한 상품 정보
+SELECT TP.*           --> 검색하고서 조건에서 걸러냄
+FROM TBL_BUY tb , TBL_PRODUCT tp 
+WHERE  TP.PCODE =TB.PCODE  --일치한 것만 찾아냄으로써 중복을 없앰                     --1) 크로스 연산
+AND TB.CUSTOMID = 'twice';													--2) 조건식 연산
+
+--서브쿼리  - 실행할때마다 SELECT 조회부터 시작하기에 검색 횟수가 많음
+SELECT TP.*
+FROM TBL_PRODUCT tp 
+WHERE PCODE IN																--2) 조건식 연산
+--('CJBAb12g','APLE5kg','DOWON123a');
+(SELECT PCODE FROM TBL_BUY tb  WHERE CUSTOMID = 'twice'); 					--1) 조건식 연산
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+진도
+다음주 월까지 db
+jdbc -> 오라클과 자바 연동
+이후 jsp

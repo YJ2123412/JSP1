@@ -1,0 +1,5 @@
+{
+    "LiverServer.settings.port" : 5500
+}
+//1. 포트 수정 파일
+//2.  설정-live server 검색 - use local IP 항목 체크 ->프로그램 종료 후 재시작

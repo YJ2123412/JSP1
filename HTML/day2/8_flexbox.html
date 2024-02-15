@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8_FLEXBOX</title>
+    <style>
+        .first{
+            display: flex;
+            height: 50rem;
+            background-color: beige;
+        }
+        .first > div{
+            box-sizing: border-box;
+            width: 15rem;
+            height: 15rem;
+            border: 2px dashed brown;
+            margin: 2rem;
+            font-size: 1.5rem;
+            color:  rgb(69, 233, 255);
+            font-weight: 700;
+            /* 블록요소의 텍스트 컨텐츠를 중앙에 오게 함 */
+            display: flex;
+            /* 세로방향 중앙 */
+            align-items: center;
+            /* 가로방향 중앙 */
+            justify-content: center;
+
+        }
+
+    </style>
+
+
+</head>
+<body>
+     <div class ="first">
+        <div>I</div>
+        <div>am</div>
+        <div>...??</div>
+        <div>안녕</div>
+        <div>H1~Hello</div>
+        <div>내일부터는</div>
+        <div>연휴</div>
+    </div>
+
+
+</body>
+</html>
