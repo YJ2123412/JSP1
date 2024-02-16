@@ -136,7 +136,77 @@ let mybirth = new Date('2020-11-03')
 ------------
 
 <input type="checkbox" name="hobby" id="football" value="축구">  ->값을 가져오려면 value
-                    <label for="football">축구</label>                         ->축구는 innerHtml
+                    <label for="football">축구</label>                         ->축구는 innerhtml
+
+
+
+
+
+-달력 만들기
+-1) 18,19번은 입력요소 가져올 때 querySelector 사용 -> 선택자 연습 예제
+-2) form은 document의 하위 객체. 여러 form을 가질 수 있으므로 배열 forms 이용하여 입력 요소 값을 가져올 수 있음
+        const night = document.forms[0].days    //name 속성값사용
+
+
+-날짜를 전달하면 yyyy-mm-dd 패턴의 문자열로 리턴해주는 함수
+        function Dateformat(vdate){ //vdate->날짜타입 인자
+            const year = vdate.getFullYear();
+            const month = (vdate.getMonth()+1).toString().padStart(2,'0');   //month는 int, 문자열 수정은 String 일때 가능
+                                                                            //padStart ->무조건 2자리로. 없으면 0을 채워서
+            const date = vdate.getDate().toString().padStart(2,'0');
+
+            console.log([year,month,date].join('-')) //[] 배열 값을 기호 -로 연결
+        }
+
+        Dateformat(new Date())
+
+
+-이벤트 리스너(핸들러)
+        document.getElementById('night').addEventListener('change',function(){
+            console.log('선택 숙박일수 =',night.value);
+        })
+
+
+
+
+
+콜백함수 이름을 인자로 전달시에는 ()안씀 - 호출임
+
+
+           
+
+1)숙박일수 선택시
+        document.getElementById('night').addEventListener('change', changeEndDate)
+
+2) 입실날짜 선택시 
+        document.getElementById('enterDate').addEventListener('change', changeEndDate)
+
+
+        function changeEndDate() {
+            console.log('선택 숙박일 =', night.value)
+                let end_date = new Date(start.value)
+                end_date.setDate(end_date.getDate()+Number(night.value))
+                //퇴실날짜 input은 전역변수 end로 선언
+                end.value = dateFormat(end_date)
+        }
+
+-입실날짜 요소의 min,max 속성으로 값의 제한을 설정
+-요구사항 min: 오늘날짜 / max : 3개월
+
+function initStart(){
+  let today = new Date();
+  start.value = dateFormat(today);
+
+-오늘날짜 이전 선택 불가
+  start.min = start.value;
+
+-3달 이후까지만 선택 가능
+  today.setMonth(today.getMonth()+3)
+  start.max = dateFormat(today)
+        }
+
+
+
 
 
 

@@ -77,6 +77,22 @@
                 //퇴실날짜 input은 전역변수 end로 선언
                 end.value = dateFormat(end_date)
         }
+
+        //입실날짜 요소의 min,max 속성으로 값의 제한을 설정
+        //요구사항 min: 오늘날짜 / max : 3개월
+        //
+        function initStart(){
+            let today = new Date();
+            start.value = dateFormat(today);
+            //오늘날짜 이전 선택 불가
+            start.min = start.value;
+
+            //3달 이후까지만 선택 가능
+            today.setMonth(today.getMonth()+3)
+            start.max = dateFormat(today)
+        }
+
+        initStart()
     </script>
 
 

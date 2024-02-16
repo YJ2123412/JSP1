@@ -49,47 +49,35 @@
         }
 
         start.value = Dateformat(new Date());
-        console.log(start.value);
 
-start.value = '`${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`'
 
         //이벤트 리스너(핸들러)
-        document.getElementById('night').addEventListener('change',function(){   //숙박 날짜 바꿀때 바뀜
+        //콜백함수 이름을 인자로 전달시에는 ()안씀
+        //숙박 날짜 바꿀때 바뀜
+        document.getElementById('night').addEventListener('change',changeEndDate)
+
+        //입실날짜 바뀔때 바뀜
+        document.getElementById('enterDate').addEventListener('change',changeEndDate)
+
+
+
+
+        function changeEndDate(){   
             
             //1)입실날짜 문자열 가져오기 ->date로 바꾸기
             const enddate = new Date(start.value)
             console.log('end',enddate);
 
-            //숙박일수 값 가져오기 
+            //숙박일수 값 가져오기  ->입실 날짜에 더한값이 퇴살날짜 ->setXXX 메소드 사용
             const nightday = Number(night.value) ;
             console.log('선택 숙박일수 =',nightday);
             //퇴실 날짜에 문자열로 value 설정하기
             enddate.setDate(enddate.getDate()+nightday)
-            console.log('더하기',enddate)
             
             console.log(enddate)
             end.value = Dateformat(enddate);
 
-        })
-
-        document.getElementById('enterDate').addEventListener('change',function(){ //입실날짜 바뀔때 바뀜
-            console.log('선택 입실 날짜=', start.value);
-            const enddate = new Date(start.value)
-            console.log('end',enddate);
-
-            //숙박일수 값 가져오기 
-            const nightday = Number(night.value) ;
-            console.log('선택 숙박일수 =',nightday);
-            //퇴실 날짜에 문자열로 value 설정하기
-            enddate.setDate(enddate.getDate()+nightday)
-            console.log('더하기',enddate)
-            
-            console.log(enddate)
-            end.value = Dateformat(enddate);
-            
-        })
-
-
+        }
 
 
 
