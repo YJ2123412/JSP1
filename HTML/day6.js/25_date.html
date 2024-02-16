@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <h3>자바스크립트의 Date 객체</h3>
+    <hr>
+    <pre style="font-size: 1rem; font-family: inherit;">
+        <script>
+            document.writeln('<h4>현재날짜와 시간</h4>');
+            console.log(new Date());
+            document.writeln(new Date());
+            
+            // Locale: 국가 혹은 언어와 관련된 정보(en-US, ko-KR..)
+            //         운영체제에 설정한 현지시간을 현지 형식에 맞게 출력 (03/10/2025 ... )
+            document.writeln('toLocaleString = ',new Date().toLocaleString());
+
+            document.writeln('toLocaleDateString en = ',new Date().toLocaleDateString('en-US',{
+                year:'numeric',month:"2-digit", day:"2-digit"
+                    })
+                );
+
+            document.writeln('toLocaleDateString kr = ',new Date().toLocaleDateString('kr-KR',{
+            year:'numeric',month:"2-digit", day:"2-digit"
+                })
+            );   
+
+            document.writeln('toLocaleDateString zn-CN = ',new Date().toLocaleDateString('zn-CN',{
+            year:'numeric',month:"2-digit", day:"2-digit"
+                })
+            );   
+
+            document.writeln('<h4>표준시간 출력</h4>');
+            document.writeln('toUTCString(협정 세계시)= ',new Date().toUTCString());
+            document.writeln('toISOString(국제 표준형식)= ',new Date().toISOString());
+
+            document.writeln('<h4>1970년 1월 1일 기준 long</h4>');
+            document.writeln(new Date().getTime());
+
+            document.writeln('<h4>날짜 및 시간 GET 메소드</h4>');
+            document.writeln('년도 = ',new Date().getFullYear());
+            document.writeln('월 = ',new Date().getMonth()+1); //월이 0부터 시작함
+            document.writeln('일 = ',new Date().getDate());
+            document.writeln('요일 = ',new Date().getDay());//요일 0~6. 0=일요일
+            document.writeln('시 = ',new Date().getHours());
+            document.writeln('분 = ',new Date().getSeconds());
+            document.writeln('초 = ',new Date().getMilliseconds());
+
+
+            document.writeln('<h4>날짜 및 시간 SET 메소드</h4>');
+            let today=new Date();
+            //setXXX메소드로 today에 저장된 날짜 변경 가능
+            today.setFullYear(today.getFullYear()+3)
+            document.writeln('today.getFullYear()+3 = ', today);
+            today.setMonth(today.getMonth()+4)
+            document.writeln('today.getMonth()+4 = ', today);
+            today.setDate(today.getDate()+10)
+            document.writeln('today.getDate()+10 = ', today);
+
+            let mybirth = new Date('2020-11-03')
+            document.writeln('mybirth',mybirth)
+            document.writeln('<h4></h4>')
+            document.writeln('<h4></h4>')
+        </script>
+
+    </pre>
+
+
+
+</body>
+</html>
