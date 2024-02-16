@@ -133,3 +133,10 @@ document.writeln('today.getDate()+10 = ', today);
 -원하는 날짜로 설정
 let mybirth = new Date('2020-11-03')
 
+------------
+
+<input type="checkbox" name="hobby" id="football" value="축구">  ->값을 가져오려면 value
+                    <label for="football">축구</label>                         ->축구는 innerHtml
+
+
+

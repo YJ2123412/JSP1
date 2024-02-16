@@ -5,8 +5,95 @@
     <title>Document</title>
 </head>
 <body>
+    <h3>날짜 형식을 다루는 input 예시</h3>
+    <hr>
+    <form action="">
+        <!-- 동기방식의 서버- 클라이언트 동작에서만 form 태그 사용 -->
+        <label for="night">숙박일수</label>
+        <select name="days" id="night">
+            <option value="0">선택</option>
+            <option value="1">1박</option>
+            <option value="2">2박</option>
+            <option value="3">3박</option>
+            <option value="4">4박</option>
+        </select><br>
+        <label for="enterDate">입실날짜: </label>
+        <input type="date" name="start" id="enterDate"><br>
+        <label for="outDate">퇴실날짜: </label>
+        <input type="date" name="end" id="outDate" disabled><br>
+        <!-- input 속성 disabled는 사용자가 접근 불가 -->
+    </form>
+    <!-- document.forms[1] -->
+    <form action="">
 
-    
-    
+    </form>
+    <script>
+        //1) 18,19번은 입력요소 가져올 때 querySelector 사용 -> 선택자 연습 예제
+        //2) form은 document의 하위 객체. 여러 form을 가질 수 있으므로 배열 forms 이용하여 입력 요소 값을 가져올 수 있음
+        const night = document.forms[0].days    //name 속성값사용
+        const start = document.forms[0].start
+        const end = document.forms[0].end
+
+        //입실날짜를 오늘 날짜로 => new Date()를 조작할 예정..
+        //start.value='2024-02-16'
+
+        //날짜를 전달하면 yyyy-mm-dd 패턴의 문자열로 리턴해주는 함수
+        function Dateformat(vdate){ //vdate->날짜타입 인자
+            const year = vdate.getFullYear();
+            const month = (vdate.getMonth()+1).toString().padStart(2,'0');   //month는 int, 문자열 수정은 String 일때 가능
+                                                                            //padStart ->무조건 2자리로. 없으면 0을 채워서
+            const date = vdate.getDate().toString().padStart(2,'0');
+
+            console.log([year,month,date].join('-')) //[] 배열 값을 기호 -로 연결
+            return [year,month,date].join('-');
+        }
+
+        start.value = Dateformat(new Date());
+        console.log(start.value);
+
+start.value = '`${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`'
+
+        //이벤트 리스너(핸들러)
+        document.getElementById('night').addEventListener('change',function(){   //숙박 날짜 바꿀때 바뀜
+            
+            //1)입실날짜 문자열 가져오기 ->date로 바꾸기
+            const enddate = new Date(start.value)
+            console.log('end',enddate);
+
+            //숙박일수 값 가져오기 
+            const nightday = Number(night.value) ;
+            console.log('선택 숙박일수 =',nightday);
+            //퇴실 날짜에 문자열로 value 설정하기
+            enddate.setDate(enddate.getDate()+nightday)
+            console.log('더하기',enddate)
+            
+            console.log(enddate)
+            end.value = Dateformat(enddate);
+
+        })
+
+        document.getElementById('enterDate').addEventListener('change',function(){ //입실날짜 바뀔때 바뀜
+            console.log('선택 입실 날짜=', start.value);
+            const enddate = new Date(start.value)
+            console.log('end',enddate);
+
+            //숙박일수 값 가져오기 
+            const nightday = Number(night.value) ;
+            console.log('선택 숙박일수 =',nightday);
+            //퇴실 날짜에 문자열로 value 설정하기
+            enddate.setDate(enddate.getDate()+nightday)
+            console.log('더하기',enddate)
+            
+            console.log(enddate)
+            end.value = Dateformat(enddate);
+            
+        })
+
+
+
+
+
+    </script>
+ 
 </body>
 </html>
