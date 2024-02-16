@@ -57,28 +57,26 @@
         start.value = dateFormat(new Date())
 
         //이벤트 리스너(핸들러)
-        document.getElementById('night').addEventListener('change', function () {
+
+        //1) 입실날짜 문자열 가져오기-> Date로 바꾸기 ☞ new Date(문자열)
+        //2) 숙박일수 값 가져오기 -> 입실 날짜에 더한값이 퇴실 날짜!! ☞ setXXXX 메소드 사용
+        //3) 퇴실날짜 요소에 문자열로 value 설정하기
+
+
+        //1)숙박일수 선택시
+        document.getElementById('night').addEventListener('change', changeEndDate)
+
+        //2) 입실날짜 선택시 
+        document.getElementById('enterDate').addEventListener('change', changeEndDate)
+
+
+        function changeEndDate() {
             console.log('선택 숙박일 =', night.value)
-            //1) 입실날짜 문자열 가져오기-> Date로 바꾸기 ☞ new Date(문자열)
-            //   숙박일수 값 가져오기 -> 입실 날짜에 더한값이 퇴실 날짜!! ☞ setXXXX 메소드 사용
-            //   퇴실날짜 요소에 문자열로 value 설정하기
                 let end_date = new Date(start.value)
                 end_date.setDate(end_date.getDate()+Number(night.value))
-
                 //퇴실날짜 input은 전역변수 end로 선언
                 end.value = dateFormat(end_date)
-
-
-        })
-
-        document.getElementById('enterDate').addEventListener('change', function () {
-            console.log('선택 입실날짜=', start.value)
-            //2)
-
-
-        })
-        //1) 2)는 같은 실행 코드
-
+        }
     </script>
 
 
