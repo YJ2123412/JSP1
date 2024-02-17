@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입폼</title>
+</head>
+<body>
+
+<!--  css 시작 -->
+<style>
+/* reset */
+*{margin:0; padding:0; box-sizing:border-box;}
+body{font-family:'Noto Sans KR', sans-serif;}
+ul,li{list-style:none;}
+button{background:none; border:none; cursor:pointer;}
+
+/* custom */
+.blind{position:absolute; z-index:-1; width:1px; height:1px; border:0; clip:rect(1px, 1px, 1px, 1px); overflow:hidden;}
+
+/* style */
+h1 {margin-top:60px;font-size:24px; text-align:center;}
+form {width:420px; margin:0 auto;}
+fieldset { border:none;}
+fieldset + button {margin-top:60px;}
+.btn-ui {width:100%; height:48px; padding:4px 20px; font-weight:700; font-size:15px; color:#fff; background:rgb(0, 126, 194); border-radius:4px;}
+.btn-ui:disabled {color:#aaa; background:#f4f4f4; border:1px solid #cfcfcf;}
+.btn-link {font-weight:700; font-size:13px; color:#333; text-decoration:underline; cursor:pointer;}
+
+.form-list li {width:100%; }
+.form-list li + li {margin-top: 20px;}
+.form-list li .inp-label {display:flex; display:-webkit-flex; justify-content:space-between; margin-bottom:6px;font-weight:700; font-size:14px; line-height:22px;}
+.form-list li .inp-label .sub-text {font-size:13px; font-style:normal; font-weight:400; color:#777; text-decoration:none;}
+
+.form-list li .input-wrap {display:flex; display:-webkit-flex; width:100%;}
+.form-list li .input-wrap input {width:100%; height:48px; padding:5px 12px; font-size:14px; border:1px solid #e1e1e1; border-radius:4px;}
+.form-list li .input-wrap .btn-ui {width:30%; margin-left:8px; }
+
+.form-list li .info-text {display:block; position:relative; margin-top:8px; padding-left:18px; font-size:12px; color:#777;}
+.form-list li .info-text:before {content:'i'; display:block; position:absolute; left:0; top:50%; width:12px; height:12px; margin-top:-6px; font-size:10px; color:#aaa; line-height:12px; text-align:center; border: 1px solid #aaa; border-radius:50%;}
+</style>
+<!-- //css 끝 -->
+
+
+<h1>회원가입</h1>
+
+<!-- form 시작 -->
+<form action="" class="form-join">
+    <!-- fieldset -->
+    <fieldset><!-- 여러 가지의 컨트롤 요소와 라벨을 그룹화함 -->
+        <legend class="blind">회원가입</legend><!-- 폼(필드셋) 그룹화 제목-->
+
+        <ul class="form-list">
+            <li>
+                <span class="inp-label"><label for="formId">아이디</label></span>
+                <div class="input-wrap">
+                    <input type="text" id="formId" name="formId" class="ui-input" placeholder="4~20자리 / 영문, 숫자, 특수문자 '_' 사용가능" title="아이디를 입력하세요.">
+                </div>
+            </li>
+            <!-- // -->
+            <li>
+                <span class="inp-label"><label for="formPassword">비밀번호</label></span>
+                <div class="input-wrap">
+                    <input type="password" id="formPassword" name="formPassword" class="ui-input" placeholder="8~16자리/영문 대소문자, 숫자, 특수문자 조합" title="비밀번호를 입력하세요.">
+                </div>
+            </li>
+            <!-- // -->
+            <li>
+                <span class="inp-label"><label for="formName">이름</label></span>
+                <div class="input-wrap">
+                    <input type="text" id="formName" name="formName" class="ui-input" placeholder="이름 입력" title="이름을 입력하세요.">
+                </div>
+            </li>
+            <!-- // -->
+            <li>
+                <span class="inp-label"><label for="formBirth">생년월일</label></span>
+                <div class="input-wrap">
+                    <input type="tel" id="formBirth" name="formBirth" class="ui-input" placeholder="YYYYMMDD" title="생년월일을 입력하세요.">
+                </div>
+            </li>
+            <!-- // -->
+            <li>
+                <span class="inp-label">
+                    <label for="formNumber">휴대폰</label>
+                    <em class="sub-text">이메일 인증을 원하시면, <button type="button" class="btn-link">이메일 인증하기</button></em>
+                </span>
+                <div class="input-wrap">
+                    <input type="tel" id="formNumber" name="formNumber" class="ui-input" placeholder="'-' 빼고 숫자만 입력" title="휴대폰 번호를 입력하세요">
+                    <button type="button" class="btn-ui" >인증요청</button>
+                </div>
+                <div class="input-wrap" style="display:none;">
+                    <input type="tel" placeholder="" title="인증번호를 입력하세요.">
+                    <button type="button" class="btn-ui" disabled>인증완료</button>
+                </div>
+            </li>
+            <!-- // -->
+            <li>
+                <span class="inp-label"><label for="formMail">이메일</label></span>
+                <div class="input-wrap">
+                    <input type="text" id="formMail" name="formMail" class="ui-input" placeholder="email@saramin.co.kr" title="이메일을 입력하세요.">
+                </div>
+                <p class="info-text">취업에 관련된 정보를 받을 때 필요해요</p>
+            </li>
+        </ul>
+    </fieldset>
+    
+    <button type="submit" class="btn-ui" disabled>회원가입 완료</button>
+    <!-- //fieldset -->
+</form>
+<!-- //form 끝 -->
+
+</body>
+</html>

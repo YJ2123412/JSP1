@@ -85,7 +85,15 @@ document.getElementById('container').addEventListener('click',function(e){
     //alert(`선택한 공은 ${e.target.outerText}입니다.`)
     alert(`선택한 공은 ${e.target.innerHTML}입니다.`)}})
 
----
+
+
+
+
+
+
+
+
+--- 
 -Date
 현재날짜와 시간
  document.writeln(new Date())

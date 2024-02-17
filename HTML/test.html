@@ -7,71 +7,188 @@
         *{
             margin: 0; padding: 0; box-sizing: border-box;
         }
-        li{
-            list-style: none; align-items: center; text-align: center; font-size: 2rem;
-        }
-        fieldset{width: 50%; margin: 0 auto;  border-color: aquamarine; 
+        body{
+            font-family:'Noto Sans KR', sans-serif;
         }
         legend{text-align: center; font-size: 1.5rem; padding: 2%;
         }
+        
         form{
             align-items: center; padding-top: 40px; border: 2rem;
         }
+        #form-sex{
+            padding-top: 20px;
+        }
+        li{
+            list-style: none;  
+        }
+        label{
+            margin: 0 2.5rem; font-weight: 900;
+        }
+        
+        input.ui-input{
+            display: flex;
+            width: 90%;
+            padding: 3%;
+            font-size: 1rem;
+            margin: 1rem 2rem 2rem 2rem;
+            border-radius: 10px;
+        }
+        .input-wrap-sex{
+            margin: 2rem 3rem 3rem;
+        }
+        .ui-input-sex{
+            display: table-row;
+            padding: 3%;
+            margin: 0.5rem;
+        }
+        fieldset{width: 40rem; margin: auto;  border-width: medium;
+            border-color: rgb(127, 195, 255); 
+            border-radius: 10px;
+        }
+
+        #btn{
+            text-align: center;
+            margin-top: 20px;
+            
+        }
         button{
-            text-align: center;
+            cursor: pointer;
+            padding: 10px;
+            font-size: 1rem;
+            background-color: rgb(217, 217, 217); border-color: rgb(181, 180, 180);
+            border-radius: 5px;
         }
-        h3{
-            text-align: center;
-        }
-        #input{
-            margin: 10px 10px;
-        }
-        input[type=text],
-        input[type=number] {
-            width: 200px;
-            padding: 7px 14px;
-            margin: 4px;
-        }
+
+
 
 
 
     </style>
 </head>
 <body>
-    <form>
+    <form action="" class="form-join">
         <fieldset>
             <legend>회원가입</legend>
-            <ul id="input">
-                <h3><label for="nameform">이름</label></h3>
-                <li><input type="text"; name="name" id="nameform" placeholder="이름을 입력하세요"></li>
-            </ul>    
-            <ul id="input">
-                <h3><label for="telform">핸드폰 번호</label></h3>
-                <li><input type="number"; name="tel" id="telform" placeholder="핸드폰 번호를 입력하세요"></li>
+            <ul class="form-list">
+                <li>
+                    <div class= "input-wrap">
+                        <label for="name">이름</label>
+                        <input type="text" name="name" class="ui-input" placeholder="한/영 2~5글자">
+                    </div>
+                </li>
+                <li>
+                    <span><label>아이디</label></span>
+                    <div class= "input-wrap">
+                        <input type="text" id="formId" class="ui-input" placeholder="사용할 아이디를 입력하세요" required>
+                    </div>
+                </li>
+                <li>
+                    <span><label>비밀번호</label></span>
+                    <div class= "input-wrap">
+                        <input type="password" id="formPw" class="ui-input" placeholder="8~20 자리/ 영문 , 숫자 조합" required>
+                    </div>
+                </li>
+                <li>
+                    <span><label>생년월일</label></span>
+                        <input type="date" id="inputDate" name="birth" class="ui-input" required>
+                </li>
+                <li>
+                    <span><label>전화번호</label></span>
+                    <div class= "input-wrap">
+                        <input type="tel" name="formtel" class="ui-input" placeholder="' - '을 삽입해주세요">
+                    </div>
+                </li>
+                <li>
+                    <span><label>이메일</label></span>
+                    
+                        <input type="email" name="email" class="ui-input" placeholder="koreatit@gmail.com">
+                    
+                </li>
+                <li>
+                    <span><label>성별</label></span>
+                        <div class= "input-wrap-sex">
+                            <form id="form-sex">
+                                <input type="radio" name="formsex" value="female" class="ui-input-sex" checked> 여성
+                                <input type="radio" name="formsex" value="male" class="ui-input-sex"> 남성
+                            </form>
+                        </div>    
+                </li>
+
             </ul>
-            <ul id="input">
-                <li><input type="date"; name="birth"; id="birth" > </li>
-            </ul>
+                
             
         </fieldset>
-        <button> 작성 완료 </button>
+        <div id = "btn">
+            <button id="complete" > 작성 완료 </button>
+        </div>
     </form>
     
 
 
     <script>
-        function save(){
-            const name = document.getElementById('name')
-            const tel = document.querySelector('tel')
-            console.log(name)
-            console.log(tel)
+        const birth = document.forms[0].birth
+        const max = document.forms[0].birth
+        const min = document.forms[0].birth
 
+        function Dateformat(vdate){ 
+            const year = vdate.getFullYear();
+            const month = (vdate.getMonth()+1).toString().padStart(2,'0');   //month는 int, 문자열 수정은 String 일때 가능
+            const date = vdate.getDate().toString().padStart(2,'0');
+            console.log([year,month,date].join('-')) //[] 배열 값을 기호 -로 연결
+            return [year,month,date].join('-');
+        }
+        birth.value = Dateformat(new Date())
+
+        function minmax(){
+            // 시작날짜(min 속성)
+            let sDate = new Date();
+            // 종료날짜(max 속성)
+            let eDate = new Date();
+
+            sDate.setDate(sDate.getDate() + 1);     // 시작날짜의 날짜를 +1일 한다.
+            eDate.setDate(eDate.getDate() + 28);   // 종료날짜의 날짜를 +28일 한다.
+
+            let minStr = sDate.toISOString().split('T')[0];
+            let maxStr = eDate.toISOString().split('T')[0];
+
+            birth.max = maxStr
+            birth.min = minStr
+
+            console.log('시작날짜 : ',minStr);
+            console.log('종료날짜 : ',maxStr);
         }
 
+        minmax()
+        
 
+        function complete(){
+            window.location.href = 'http://127.0.0.1:5500/day3_form/success.html';
+        }
         function isValid(){
+            let isValid = true;//유효성 통과
+            let regex= /^[a-zA-Z가-힣]{2,5}$/
+            var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/
+            var regEmail = /^0-9a-zA-Z@0-9a-zA-Z\.[a-zA-Z]{2,3}$/
 
+            //regPhone.test(formtel.value)
+            //regEmail.test(email.value)
+            if (name.value == '') {
+                alert('이름을 입력하세요')
+                name.focus()
+                isValid= false;    //유효한 값이 아니면 false
+
+            } else if(!regex.test(name.value)){  //위에서 정의한 regex로 입력값 검사
+                alert('이름에 기호나 숫자가 포함되어 있습니다')
+                
+                
+                isValid= false;
+            } else
+
+            document.getElementById('complete').addEventListener('click',complete)
         }
+
+        
 
     </script>
 </body>
