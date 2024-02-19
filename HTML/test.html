@@ -8,7 +8,7 @@
             margin: 0; padding: 0; box-sizing: border-box; vertical-align: baseline;
         }
         html{
-            /* font-size: 62.5%; */
+            font-size: 62.5%;
         }
         body{
             font-family:'Noto Sans KR', sans-serif;
@@ -19,9 +19,9 @@
         legend{
             text-align: center; font-size: 1.5rem; padding: 2%;
         }
-        fieldset{width: 40rem; margin: auto;  border-width: medium;
+        fieldset{width: 40rem; margin: auto;  border-width: thin;
             border-color: rgb(127, 195, 255); 
-            border-radius: 10px;
+            border-radius: 4px;
         }
         #form-sex{
             padding-top: 20px;
@@ -39,7 +39,8 @@
             padding: 3%;
             font-size: 1rem;
             margin: 1rem 2rem 2rem 2rem;
-            border-radius: 10px;
+            /* border-radius: 10px; */
+            border:1px solid #e1e1e1; border-radius:4px;
         }
         .input-wrap-sex{
             margin: 2rem 3rem 3rem;
@@ -48,6 +49,9 @@
             display: table-row;
             padding: 3%;
             margin: 0.5rem;
+        }
+        #birth{
+            color: gray;
         }
 
         #btn{
@@ -61,6 +65,7 @@
             font-size: 1rem;
             background-color: rgb(217, 217, 217); border-color: rgb(181, 180, 180);
             border-radius: 5px;
+            border:2px
         }
 
 
@@ -77,7 +82,7 @@
                 <li>
                     <label for="name">이름 <span style="color: red;">*</span></label>
                     <div class= "input-wrap">
-                        <input type="text" id="name" name="name" class="ui-input" placeholder="한/영">
+                        <input type="text" id="name" name="name" class="ui-input" placeholder="한/영" required>
                     </div>
                 </li>
                 <li>
@@ -94,18 +99,18 @@
                 </li>
                 <li>
                     <span><label>생년월일 <span style="color: red;">*</span></label></span>
-                    <input type="date" id="birth" name="birth" class="ui-input" required>
+                    <input type="text" id="birth" name="birth" class="ui-input" required; >
                 </li>
                 <li>
                     <span><label>전화번호 <span style="color: red;">*</span></label></span>
                     <div class= "input-wrap">
-                        <input type="tel" name="formtel" class="ui-input" placeholder="' - '을 삽입해주세요">
+                        <input type="tel" name="formtel" class="ui-input" placeholder="' - '을 삽입해주세요" required>
                     </div>
                 </li>
                 <li>
                     <span><label>이메일</label></span>
                     <div class= "input-wrap"></div>
-                        <input type="email" name="email" class="ui-input" placeholder="koreatit@gmail.com">
+                        <input type="email" id= "email" name="email" class="ui-input" placeholder="koreatit@gmail.com">
                     </div>
                 </li>
                 <li>
@@ -141,6 +146,8 @@
             var regEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
             //특수문자 검증
             var regPw = /[!@#$%^&*(),.?":{}|<>]/;
+            var regbirth = /(19|20)\\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])/;
+
 
             const name = document.querySelector('input[name="name"]')
             const formId = document.querySelector('input[name="formId"]')
@@ -177,7 +184,8 @@
                 alert('핸드폰 양식을 확인해주세요 (010-0000-0000)')
                 formtel.focus();
                 isValid= false; 
-            } else if(!email.value.length=='' &&!regEmail.test(email.value)){
+            } //이메일 선택사항으로 할 시
+            else if(!email.value.length=='' &&!regEmail.test(email.value)){
                 alert('이메일 양식을 확인해주세요')
                 email.focus();
                 isValid= false; 
@@ -185,8 +193,17 @@
                 alert('생년월일을 선택해주세요')
                 birth.focus();
                 isValid =false;
+            } else 
+            if(!regbirth.test(birth.value)){
+                alert('생일 입력 양식을 확인해 주세요 YYYY-MM-DD')
+                birth.focus();
+                isValid =false;
             }
+
+
+
             if(isValid){
+                alert(`${formId.value}님 가입을 환영합니다.`)
                 window.location.href = 'http://127.0.0.1:5500/day3_form/success.html';
             }
         }
