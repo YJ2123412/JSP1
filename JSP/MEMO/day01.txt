@@ -26,5 +26,127 @@ port는 다른 서버들과 겹치면 안됨..
 
 4. 이클립스는 lombok.jar로 설치하는 과정 필요
 -이클립스 폴더 중에 한글 폴더명 있을 시 작동 X
--롬복 실행-> 이클립스 파일 선택- install -> 이클립스 파일 폴더 내에 lombok 생성됨
+-롬복 실행-> 이클립스 파일 선택- install 
+ -> 설치확인 
+1 ) 이클립스 파일 폴더 내에 lombok 생성됨
+2 ) eclips.ini 에 -javaagent:C:\Users\YJ\eclipse\jee-2023-09\eclipse\lombok.jar 이 생김 (복붙으로 생성x)
+
+5. 이클립스에는 중요한 라이브러리 관리 메뉴가 있음
+lombik.jar, ojbdc11.jar
+
+ojdbc11->https://www.oracle.com/database/technologies/appdev/jdbc-downloads.html
+
+-필요한 외부 library 추가 방법
+ - 프로젝트 우클릭- build path - Configure Build Path-library-modulepath-add External Jars
+ 
+-다이나믹 웹프로젝트-> web환경에서 사용할 라이브러리 weapp폴더 -WEB-INF -lib 폴더에 추가(lombok,ojdbc)
+ㄴ실무에서는 빌드도구 (maven, gradle)를 이용해서 설정파일로 자동 다운로드 및 라이브러리 관리 
+
+
+6. java에서 했던 jdbcex는 dao, vo 위주로 복습하면서 사용할 예정
+
+7. server를 사용하는 동적 웹프로젝트를 만들어봅시다.
+	*현재 perspctive가 JAVA EE 상태여야 뜸(
+	1) File-New-Dynamic Wep Project 
+	2) Target runtime-> Tomcat ver 잘맞는지 확인 
+
+
+gitignore ->환경에 따라 새로 만들어야 함
+
+8. 동적 웹프로젝트 폴더 구조-
+src-main- java      :  .java 소스파일
+	   - webapp : html, css, js, jsp
+		ㄴ 정적 리소스: html, css, js, image ->assets 폴더 안에 각각 폴더 생성하여 저장
+		ㄴ 동적 리소스: jsp	-> 기능별 폴더 만들기 (day 1, product..)
+
+
+jsp: action에 서버의 주소를 설정/동적 사이트(O) html(x)
+****method get은 조회, post는 저장(수정)
+
+---
+jsp 파일 생성시
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%> 
+   <!-- language="java": java언어로 컴파일
+   contentType="text/html; charset=UTF-8" : 응답으로 만들어질 형식은 html (프론트) pageEncoding="UTF-8"%(백엔드)
+    -->
+
+-자바 프로그래밍을 하는 스크립트 작성부분 : 스크립트릿- >  : <% %>
+
+-form태그 안의 입력양식이 서버로 제출될 때 , 그 값을 받아 저장하는 코드
+-getParameter 메소드이므로 앞으로는 입력 요소: 파라미터
+-input요소의 name 속성값=인자
+
+<form action="welcome.jsp" method="post">
+post를 해둘경우 정보가 url에 노출되지 않음/ 안할경우 url에 파라미터들이 보임
+
+jsp는 서버측에서 컴파일되고 실행됨 ->컴파일 전에는 .java 파일로 변경 -> .java를 컴파일해서 .class 생성
+	->웹페이지를 요청한 클라이언트에게는 .class 파일로 html 문서를 작성하여 응답  
+	
+	1) 이클립스는 jsp 에 대한 소스파일이 이곳에 있음
+	C:\Users\YJ\Desktop\Coding\Main\JSP\eclips-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\work\Catalina\localhost\jsp1\org\apache\jsp
+
+->이곳에 있는 java 파일= 서블릿
+	
+	
+	2) webapp 폴더에 저장된 파일들은 jsp 제외하고 여기 있음
+	C:\Users\YJ\Desktop\Coding\Main\JSP\eclips-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps
+	
+	둘 다 실제 실행 환경에서는 tomcat폴더 안에서 바로 찾을 수 있음
+	
+
+
+----
+-document.forms[0].submit(); -> 첫번째 폼 제출 (form에 action이 설정되어있다면 해당 action 실행)
+
+--------------------
+
+DB perspctive 상태에서 -> Datebase Connections ->new -> Oracle 선택 XE, localhost... 상태 바꿔놓기
+연결 후 perspective에서 EE로 넘어온 후에 File-open project -> 오라클 script 폴더 가져오기
+
+*주의: 이클립스는 perspctive 라는 실행모드 존재. 어떤 모드냐에따라 실행할 수 있는 메뉴(동작)이 다름. db와 자바코드 작성시 전환 주의
+
+
+-Datebase Development 에서 Database Connecions 추가하기
+
+
+단축키
+shift+엔터: 중간에 다음줄이동 
+컨트롤+알트+방향키: 복사
+
+
+
+
+
+
+----------------------
+
+	1) 이클립스는 jsp 에 대한 소스파일이 이곳에 있음
+	C:\Users\YJ\Desktop\Coding\Main\JSP\eclips-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\work\Catalina\localhost\jsp1\org\apache\jsp
+
+->이곳에 있는 java 파일= 서블릿
+	
+request- 요청: 제일 중요 .. request.gatParameter 등..
+
+<%@ %> : 페이지 지시자 (import .. )
+
+-url
+파라미터 시작: ? 
+연결&
+
+
+파라미터 보내기
+<ul>
+		<li><a href="5_param_receive.jsp?name=sana&age=24">1. name, age 2개의 파라미터 보내기</a></li>
+		<li><a href="5_param_receive.jsp?name=sana">2. name, age 2개의 파라미터 보내기-age 파라미터 없음</a></li>
+		<li><a href="5_param_receive.jsp?name=sana&age=">3. name, age 2개의 파라미터 보내기-age값 없음</a></li>
+	</ul>
+
+1. 정상작동 
+2. age = null
+3. age = 공백
+
+-> url도 보낸대로 나오는게 맞는지 확인
+
 

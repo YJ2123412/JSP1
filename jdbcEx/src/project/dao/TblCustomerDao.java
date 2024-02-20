@@ -107,4 +107,27 @@ public class TblCustomerDao {
         }
         return list;
     }
+    
+    public List<CustomerVo> selectBy(String name, int age){
+        String sql ="select * from tbl_custom where name =? and age = ?";
+        List<CustomerVo> list = new ArrayList<>();
+        try (Connection connection = getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+        	) {pstmt.setString(1, name);
+            	pstmt.setInt(2, age);
+            	ResultSet rs = pstmt.executeQuery();
+            	while (rs.next()) {
+            		list.add(new CustomerVo(rs.getString(1),
+            								rs.getNString(2),
+            								rs.getString(3),
+            								rs.getInt(4),
+            								rs.getDate(5)));
+            	}
+        	} catch (SQLException e) {
+        		System.out.println("getCustomer 실행 예외 : "+e.getMessage());
+        	}
+        	return list;
+    }
+    
+    
 }
