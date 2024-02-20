@@ -20,20 +20,14 @@
 	String temp = request.getParameter("age");
 	List<CustomerVo> list = null;
 	
-	
-	
 	if((name !=null && name.length()!=0)&&(temp!=null && temp.length() !=0)){
 		int age = Integer.parseInt(temp);
 		list = dao.selectBy(name, age);
 		out.print(list);
 		if(list.size()==0) out.print("<h4>조회결과가 없습니다</h4>");
-		
-		
 	} else{
 		out.print("파라미터 값을 모두 입력하세요");
 	}
-	
-
 %>
 </body>
 </html>

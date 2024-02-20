@@ -19,7 +19,8 @@
 	<hr>
 	<h3>테이블에서 조회하기</h3>
 	<ul>
-		<li><a href="6_selectBy.jsp?name=김사나&age=23">name, age 2개의 파라미터 보내기</a></li>
+		<li><a href="6_selectBy.jsp?name=김사나&age=23">name, age(23) 2개의 파라미터 보내기</a></li>
+		<li><a href="6_selectBy.jsp?name=김사나&age=24">name, age(24) 2개의 파라미터 보내기</a></li>
 		<li><a href="6_selectBy.jsp?name=김사나">name, age 2개의 파라미터 보내기-age 파라미터 없음</a></li><!--age=null  -->
 		<li><a href="6_selectBy.jsp?name=sana&age=">name, age 2개의 파라미터 보내기-age값 없음</a></li><!--age= ''-->
 		<li><a href="6_selectBy.jsp?name=사나&age=">name 한글, age 2개의 파라미터 보내기-age값 없음</a></li>

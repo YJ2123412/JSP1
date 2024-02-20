@@ -108,8 +108,6 @@ DB perspctive 상태에서 -> Datebase Connections ->new -> Oracle 선택 XE, lo
 *주의: 이클립스는 perspctive 라는 실행모드 존재. 어떤 모드냐에따라 실행할 수 있는 메뉴(동작)이 다름. db와 자바코드 작성시 전환 주의
 
 
--Datebase Development 에서 Database Connecions 추가하기
-
 
 단축키
 shift+엔터: 중간에 다음줄이동 
@@ -148,5 +146,36 @@ request- 요청: 제일 중요 .. request.gatParameter 등..
 3. age = 공백
 
 -> url도 보낸대로 나오는게 맞는지 확인
+
+
+이클립스에서 table보기 : table 누르고 오른쪽마우스 클릭->data-> sample data
+
+--
+
+ -url 6번 파일로 파라미터 포함하여 넘기기 웹브라우저의 주소변경 : location 객체의 'href' 속성값은 'url' 주소 - 파일지정과 별개
+location.href="6_selectBy.jsp"; 
+
+
+---------------------------------------
+
+
+GIT 관리 순서
+
+앞으로는 jsp1 프로젝트 하나에 로컬/원격 저장소 1:1 대응
+git init( 초기화)
+git add 파일선택 (스테이징 :   .gitignore 새로 만들어야 함)
+git remote add origin 저장소url
+git commit -m"메시지"
+git push origin
+
+--명령어 복습 끝
+
+push할때 사용자 권한 필요 - 자격증명관리자
+->새로 추가
+
+
+
+
+
 
 
