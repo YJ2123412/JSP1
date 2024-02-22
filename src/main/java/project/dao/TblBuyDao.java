@@ -19,12 +19,18 @@ public class TblBuyDao {
     public static final String URL ="jdbc:oracle:thin:@//localhost:1521/xe";
     public static final String USERNAME = "c##idev";
     private static final String PASSWORD = "1234";
+    public static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 
     private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USERNAME, PASSWORD);
+    	Connection conn=null;
+    	try {
+			Class.forName(DRIVER);
+			conn= DriverManager.getConnection(URL, USERNAME, PASSWORD);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+        return conn;
     }
-    //executeUpdate 메소드는 insert,update,delete 가 정상 실행(반영되 행 있으면)되면 1을 리턴, 
-    //                       특히 update, delete 는 조건에 맞는 행이 없어서 반영된 행이 없으면 0을 리턴. 
     //구매하기
     public int insert(BuyVo vo){
         // 할일1 : SQL 작성하기 (매개변수 표시 정확히 합시다.)
@@ -40,7 +46,6 @@ public class TblBuyDao {
                pstmt.setInt(3, vo.getQuantity());
                result= pstmt.executeUpdate();
         } catch (SQLException e) {
-            //customid 와 pcode 는 참조테이블에 존재하는 값이 아니면 무결성 위반 오류
             System.out.println("구매하기 실행 예외 발생 : " + e.getMessage());
         }//close는 자동으로 합니다. finally 없음
         return result;
@@ -180,4 +185,29 @@ public class TblBuyDao {
 
         return money;
     }
+    
+    public List<BuyVo> selectAll(){
+    	String sql="SELECT * FROM TBL_BUYLIST";
+    	List<BuyVo> list = new ArrayList<>();
+    	try(
+                Connection conn = getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql))
+    		{
+    		    ResultSet rs = ps.executeQuery();
+    		    while(rs.next()) {
+    			    list.add(new BuyVo(rs.getInt(1), 
+    					rs.getString(2), 
+    					rs.getString(3), 
+    					rs.getInt(4),
+                        rs.getDate(5)));
+    		    }
+            }catch(SQLException e){
+                System.out.println("구매내역 실행 예외 발생 : " + e.getMessage());
+            }
+    		return list;
+    	
+    	
+    	
+    }
+    
  }

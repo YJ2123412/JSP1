@@ -1,11 +1,9 @@
 package project.vo;
 
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
 @EqualsAndHashCode
 public class ProductVo {
     private String pcode;
@@ -19,5 +17,12 @@ public class ProductVo {
                             category,pcode,pname,price);
     }
 
-    
+	public ProductVo(String pcode, String category, String pname, int price) {
+		super();
+		this.pcode = pcode;
+		this.category = category;
+		this.pname = pname;
+		this.price = price;
+	}
+
 }

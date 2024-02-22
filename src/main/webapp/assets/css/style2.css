@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+* {
+    box-sizing: border-box;
+}
+body{
+	display: flex; flex-direction: column; align-items:center; margin: 3% 10%; border-style: solid; 
+	border-width:5px;  border-color: #dcf7f4; border-radius: 4px;
+}
+
+li{ list-style: none;
+	
+}
+
+ul{
+	border-bottom: 3px; border-bottom-color: rgb(0, 128, 255); border-bottom-style: double; padding: 0.5rem; 
+	
+	}
+
+
+h3,h4,h5,li{
+	 text-align: center;
+	
+}

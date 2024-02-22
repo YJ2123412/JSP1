@@ -46,7 +46,7 @@
 				<td><fmt:formatDate value="${vo.reg_date}" pattern="yyyy-MM-dd a hh:mm:ss"/></td>
 			</tr>
 		</c:forEach>
-	</table>
+	</table> 
 	<table>
 	</table>
 

@@ -17,9 +17,18 @@ public class TblProductDao {
     public static final String URL ="jdbc:oracle:thin:@//localhost:1521/xe";
     public static final String USERNAME = "c##idev";
     private static final String PASSWORD = "1234";
+    public static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
+
 
     private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USERNAME, PASSWORD);
+    	Connection conn=null;
+    	try {
+			Class.forName(DRIVER);
+			conn= DriverManager.getConnection(URL, USERNAME, PASSWORD);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+        return conn;
     }
 
     //2. 카테고리로  검색하기 
@@ -90,4 +99,45 @@ public class TblProductDao {
 
         return map;
     }
+    
+	public List<ProductVo> selectAll() {
+        List<ProductVo> list = new ArrayList<>();
+        String sql = "SELECT * FROM TBL_PRODUCT";
+        try(
+            Connection conn = getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql))
+		{
+		    ResultSet rs = ps.executeQuery();
+		
+		    while(rs.next()) {
+			    list.add(new ProductVo(rs.getString(1), 
+					rs.getString(2), 
+					rs.getString(3), 
+					rs.getInt(4)));
+		    }
+        }catch(SQLException e){
+            System.out.println("selectByPname 예외 발생 : " + e.getMessage());
+        }
+		return list;
+	}
+	
+	public void insert(String pcode, String category, String pname, int price) {
+		
+		String sql ="INSERT INTO tbl_product tp \r\n"
+				+ "VALUES (?, ?, ?, ?)";
+	    try(
+	            Connection conn = getConnection();
+	            PreparedStatement ps = conn.prepareStatement(sql))
+			{
+	            ps.setString(1, pcode);
+	            ps.setString(2, category);
+	            ps.setString(3, pname);
+	            ps.setInt(4, price);
+	            ps.executeUpdate();
+			
+	        }catch(SQLException e){
+	            System.out.println("selectByPname 예외 발생 : " + e.getMessage());
+	        }
+	    ProductVo vo = new ProductVo(pcode, category, pname, price);
+	}
 }
