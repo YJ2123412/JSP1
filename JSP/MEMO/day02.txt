@@ -1,1 +1,141 @@
 day2
+
+브라우저에 입력하는 것은 모두 메소드 (get) 요청 
+get - post
+
+검사-네트워크 - ctrl+r 에서 눌러보면 요청 메서드 상태를 볼 수 있음
+응답 response 요청 request
+
+요청 받기: java
+응답 하기: jsp (화면만 만들어주기)
+
+
+
+
+
+
+
+
+
+
+	<li>요청 URL: <%= request.getRequestURL() %></li>
+	<li>요청 URI: <%= request.getRequestURI() %></li> 
+	<li>컨텍스트(context): <%=request.getContextPath() %></li>
+	
+	<li>클라이언트 ip : <%= request.getRemoteAddr() %></li>
+	<li>클라이언트 host : <%= request.getRemoteHost() %></li>
+	<li>클라이언트 포트 : <%= request.getRemotePort() %></li>
+	<!-- 기준이 서버이므로 remote 멀리 떨어진 것이 클라이언트.. local이 서버 -->
+	<li> 서버 ip : <%= request.getLocalAddr() %></li>
+	<li> 서버 name : <%= request.getLocalName() %></li>
+	<li> 서버 port : <%= request.getLocalPort() %></li>
+
+요청 URL : http://192.168.30.254:8088/jsp1/day2/9_request.jsp
+요청 URI : /jsp1/day2/9_request.jsp    -> 실제 자원 위치
+컨텍스트(context) : /jsp1				//이클립스에서 프로젝트 이름을 기본으로 설정
+클라이언트 ip :192.168.12.5
+클라이언트 host : 192.168.12.5
+클라이언트 포트 : 52335				//클라이언트에서 요청을 보내는 포트(임의의 값)
+서버 ip :192.168.30.254
+서버 Name : DESKTOP-HUJUVSS
+서버 포트 : 8088					//특정 서비스 진입하는 포트
+
+
+----
+
+JSTL 태그 라이브러리 테스트</h3>
+	<p>기존에 사용하던 jsp의 스크립트릿, 출력식 기호 대체 -> 요청처리하는 자바코드와 화면을 구성하는 html 태그를 분리할때 jsp 파일을 태그형식으로만 작성하기 위해
+	</p>
+	<p> 태그 라이브러리는 맨 위 지시자에서 정의하고 사용. EL 기호는 애트리뷰트 값만 출력 가능 </p>
+	<hr>
+	<%String name ="sana";  //자바의 변수 ... / age= 애트리뷰트%>
+	<h4>c: 으로 시작하는(prefix) core 태그</h4>
+	<!--1. pageContext 영역에 '애트리뷰트' 이름 age, 값 23을 저장  -->
+	<c:set var="age" value="13"/>
+	<!-- 2. 저장된 애트리뷰트 값 출력 -->
+	<h5>age: <c:out value="${age }"></c:out></h5> <!-- age는 애트리뷰트 이름 -->
+	<h5>name: <c:out value="${name }"></c:out></h5> <!-- name은 자바변수. 출력 안됨 -->
+	<!-- 3. 자바의 if 태그 대신 사용 -->
+	<h5>c:if테스트</h5>
+	<!-- 조건식을 test 속성에 작성. EL 기호 안에 사용 -->
+	<c:if test ="${age<20 }">
+		<div style ="color:green">청소년입니다. </div>
+	</c:if>
+		<c:if test ="${age>=20 }">
+		<div style ="color:red">성인입니다. </div>
+	</c:if>
+	<!--4. if~else 형식  -->
+	<h5>c:choose 테스트</h5>
+	<c:set var="age" value="23"/>  <!-- 애트리뷰트 age값 변경 -->
+	<c:choose>
+		<c:when test="${age <20 }">
+			<div style ="color:green">청소년입니다. </div>
+		</c:when>
+		<c:otherwise>
+			<div style ="color:red">성인입니다. </div>
+		</c:otherwise>
+		</c:choose>
+	<!--5. for문   -->
+		<h5>c:for 테스트</h5>
+		<c:forEach var="i" begin="1" end="10" varStatus="status" step="2">
+			<div>
+				<c:out value="${i }"/>
+				<c:out value="${i*11}"/>
+				<!-- varstatus 속성은 for 반복 상태를 알 수 있는 값을 제공 -->
+				<!--<c:out value="${status.index }"/>-->
+				<c:out value="${status.count}"/>
+				<c:out value="${status.step}"/>
+			</div>
+		</c:forEach>
+		<!--6. 자바 객체 활용하기  -->
+		<h5>자바 객체 활용하기</h5>
+		<%
+			//서블릿을 활용하여 가져올 값이지만 여기서는 직접 정의
+			CustomerVo vo= new CustomerVo("momo","강모모","momo22@daum.net",29,null);
+			//만들어진 객체를 pageContext scope의 애트리뷰트로 저장
+			pageContext.setAttribute("customer",vo);
+		%>
+		<c:out value="${customer }"/>
+		<ul>
+		<!--객체변수명.getXXX() getter 메소드 사용... -> EL은 알아서 getter 동작. 객체의 속성 이름 정확히 작성  -->
+			<li>${customer.customId}</li>
+			<li>${customer.name}</li>
+			<li>${customer.email}</li>
+			<li>${customer.age}</li>
+		</ul>
+
+
+if 문
+1) <c:if test=""> 실행코드 </c:if>
+2)
+<c:choose>
+	<c: when test=""> 실행코드 
+	<c:otherwise> 실행코드 
+	</c:when>
+	</c:otherwise>
+</c:choose>
+
+
+----------------------------
+사이에 들어가는 글이 없으면 <c:out value="" />처럼 한문장안에서 끝낼 수 있음
+
+
+
+
+
+
+
+
+애트리뷰트 : 교재 p.111~134
+jstl과 el: p.343~422
+422-taglib의 uri가 다름(톰캣 버전의 차이)
+
+
+
+
+
+
+
+
+
+
