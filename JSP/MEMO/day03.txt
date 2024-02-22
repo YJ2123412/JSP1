@@ -1,1 +1,21 @@
 day3
+
+pagecontext-> 가장 적은 범위
+el 기호에서 지정된 이름 list 애트리뷰트를 가져오는 동작 ->pageContext.getArrtibute(list)
+설정하는 동작->pageContext.setAttribute("list",list)
+
+
+
+
+    //get 요청을 처리하는 메소드 - 인자 2개 (XXXRequest, XXXResponse .. 요청과 응답에 대한 처리 가능)
+    //사용자 요청을 request 객체에 저장하면서 동시에 응답을 전달할 객체 response가 생성됨
+   
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//사용자 요청에 대한 정보출력(request 객체의 속성값): 로그 출력에서 {}는 결과값 표시     ->{} 순서대로 () 가 들어감
+		logger.info("\n[MyInfo]: request URL :{} , URI: {}, 컨텍스트패스: {}",
+				request.getRequestURL(),request.getRequestURI(), request.getContextPath());
+		//정보: [MyInfo]: request URL :http://localhost:8088/jsp1/first.cc , URI: /jsp1/first.cc, 컨텍스트패스: /jsp1
+		//url: 풀 , url:프로젝트 파일경로 , 컨텍스트패스: 프로젝트 이름
+---
+
+작동 잘안되면 window-clean / 혹은 서버 재실행
