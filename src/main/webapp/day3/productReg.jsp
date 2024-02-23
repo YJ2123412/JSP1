@@ -18,11 +18,11 @@
               <li>pcode</li>
               <li><input name="pcode" type="text"  placeholder="pcode를 입력해 주세요." /></li>
               <li>category</li>
-              <li><input  name="category" type="text" placeholder="category를 입력해주세요" /></li>
+              <li><input  name="category" type="text" placeholder="category를 입력해주세요(영문 2글자)" /></li>
               <li>상품 이름</li>
               <li><input name="pname" type="text" placeholder="상품 이름을 입력해 주세요." /></li>
               <li>가격</li>
-              <li><input name="price" type="number" placeholder="가격을 입력해주세요" /></li>
+              <li><input name="price" type="number" placeholder="가격을 입력해주세요(숫자 최대 9글자)" /></li>
             </ul>
             <button class="join-btn" >상품 등록하기</button>
           </form>

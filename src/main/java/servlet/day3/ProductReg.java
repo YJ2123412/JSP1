@@ -1,6 +1,7 @@
 package servlet.day3;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -46,21 +47,25 @@ public class ProductReg extends HttpServlet{
 		
 		 
 		TblProductDao dao = new TblProductDao();
-		dao.insert(pcode, category, pname, price);
+		int result = dao.insert(pcode, category, pname, price);
 		
 		logger.info("\t 입력값 vo: {}", dao);
 		 //서버가 클라이언트에게 응답을 보냄 ->"customers.cc로 요청을 보내라
-		 resp.sendRedirect("products.cc");
+		// resp.sendRedirect("products.cc");
 		 //리다이렉트는 웹페이지의 js, out.print .. 출력 사용 불가능
 		
-		
-		
-		
-		
-		
-		
-		
+		String message="상품 등록이 완료되었습니다";
+		if(result==0) {
+			message="상품 등록 오류가 생겼습니다.";
+			
+			resp.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = resp.getWriter();
+			out.print("<script>");
+			out.print("alert('"+message+"');");
+			out.print("location.href='products.cc';");
+			out.print("</script>");
+			
+		}
 		
 	}
-	
 }

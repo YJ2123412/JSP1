@@ -121,10 +121,16 @@ public class TblProductDao {
 		return list;
 	}
 	
-	public void insert(String pcode, String category, String pname, int price) {
+	
+	
+	
+	
+	//정상 완료하면 1, 오류시 0 리턴
+	public int insert(String pcode, String category, String pname, int price) {
 		
 		String sql ="INSERT INTO tbl_product tp \r\n"
 				+ "VALUES (?, ?, ?, ?)";
+		int result = 0;
 	    try(
 	            Connection conn = getConnection();
 	            PreparedStatement ps = conn.prepareStatement(sql))
@@ -133,11 +139,12 @@ public class TblProductDao {
 	            ps.setString(2, category);
 	            ps.setString(3, pname);
 	            ps.setInt(4, price);
-	            ps.executeUpdate();
+	            result=ps.executeUpdate(); //정상완료시 1리턴, 오류시 0리턴
 			
 	        }catch(SQLException e){
 	            System.out.println("selectByPname 예외 발생 : " + e.getMessage());
 	        }
 	    ProductVo vo = new ProductVo(pcode, category, pname, price);
-	}
+	    return result;
+	    }
 }
