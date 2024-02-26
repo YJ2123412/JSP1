@@ -1,18 +1,22 @@
 package project.vo;
 
 import java.sql.Date;
-
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @ToString
 @EqualsAndHashCode
+//@NoArgsConstructor
+@AllArgsConstructor
 public class BuyVo {
 	private int buyIdx;
+	private int buy_Idx;
 	private String customid;
 	private String pcode;
 	private int quantity;
 	private Date buyDate;
+	private Date buy_Date;
 	
 	public void setBuyIdx(int buyIdx) {
 		this.buyIdx = buyIdx;

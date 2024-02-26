@@ -187,7 +187,7 @@ public class TblBuyDao {
     }
     
     public List<BuyVo> selectAll(){
-    	String sql="SELECT * FROM TBL_BUYLIST";
+    	String sql="SELECT * FROM TBL_BUYLIST ORDER BY BUY_DATE DESC";
     	List<BuyVo> list = new ArrayList<>();
     	try(
                 Connection conn = getConnection();
