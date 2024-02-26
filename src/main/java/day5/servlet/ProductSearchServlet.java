@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import day4.mybatis.dao.MybatisProductDao;
+import day4.mybatis.dto.CateDto;
 import day4.mybatis.dto.ProductDto;
 
 
@@ -37,13 +38,18 @@ public class ProductSearchServlet extends HttpServlet {
 		Map<String, Object> map = new HashMap<>();
 		if(category !=null&& category.trim().length() !=0) {
 			map.put("category", category);
+			req.setAttribute("cate", category);
 		}
-		if(keyword !=null&& !keyword.isEmpty()) {
+		if(keyword !=null&& keyword.trim().length()!=0) {
 			map.put("keyword",keyword.trim());
+			req.setAttribute("keyword", keyword);
 		}
-		if(from !=null&& !from.isEmpty() && !to.isEmpty()&& to !=null) {
+		if(from !=null&& from.trim().length() !=0 && to.trim().length() !=0&& to !=null) {
 			map.put("from",from.trim());
 			map.put("to",to.trim());
+			req.setAttribute("from", from);
+			req.setAttribute("to", to);
+
 		}
 		logger.info("[My Info]파라미터 map: {}",map);
 		
@@ -53,7 +59,8 @@ public class ProductSearchServlet extends HttpServlet {
 		
 		
 		
-		List<String> cateList = List.of("A1","A2","B1","B2","C1");	//todo dao에서 조회하기
+		//List<String> cateList = List.of("A1","A2","B1","B2","C1");	//todo dao에서 조회하기
+		List<CateDto> cateList = dao.getCategories();
 		req.setAttribute("cateList", cateList);
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/day5/Search.jsp");

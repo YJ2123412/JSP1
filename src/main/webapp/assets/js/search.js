@@ -6,6 +6,10 @@ const keyword = document.querySelector('input[name="keyword"]');
 const from = document.querySelector('input[name="from"]');
 const to = document.querySelector('input[name="to"]');
 
+console.log(temp);
+//카테고리 조회시에만 temp값이 null이 아님
+if(temp!=null) category.value=temp;
+
 	document.getElementById('search').addEventListener('click',()=>{
 		let isValid = true;
 		if(keyword.value.length == 0 && category.value.length ==0 
@@ -17,6 +21,10 @@ const to = document.querySelector('input[name="to"]');
 			document.forms[0].submit();}
 })
 
+	/*document.querySelector('select[name="category"]').addEventListener('change',()=>{
+		
+			document.forms[0].submit();}
+)*/
 
 
 

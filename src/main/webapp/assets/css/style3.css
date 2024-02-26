@@ -9,9 +9,9 @@ button {
 .search {
    padding: 0.5rem  0.02rem;
 }
-ul{
+.row{ border-bottom-width: thin ; border-bottom-color: black; border-bottom: solid; padding:auto;
 	
 }
-li{ list-style: none; display: flex; padding: 1%;
+li{ list-style: none; display: flex; padding: 2% 1%; flex-direction: column; width: 10rem;
 	
 }

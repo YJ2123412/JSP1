@@ -6,6 +6,7 @@ import day4.mybatis.dao.MybatisBuyDao;
 import day4.mybatis.dao.MybatisCustomer;
 import day4.mybatis.dao.MybatisProductDao;
 import day4.mybatis.dto.BuyDto;
+import day4.mybatis.dto.CateDto;
 import day4.mybatis.dto.CustomerBuyDto;
 import day4.mybatis.dto.CustomerDto;
 import day4.mybatis.dto.ProductDto;
@@ -21,6 +22,10 @@ public class MybatisSessionTest2 {
 		System.out.println("dao 객체: "+buydao);
 		System.out.println("dao 객체: "+cusdao);
 		System.out.println("dao 객체: "+prodao);
+		
+		
+		List<CateDto> list = prodao.getCategories();
+		System.out.println(list);
 	}
 		
 		

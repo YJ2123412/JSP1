@@ -19,6 +19,14 @@
 			
 		  -->  		
 
+
+<!-- 카테고리 가져오기 -->
+
+<select id="getCategories" resultType="day4.mybatis.dto.CateDto">
+	<!-- select distinct category from TBL_PRODUCT order by category -->
+	select * from tbl_category order by code
+</select>
+
   		<select id="search" resultType="ProductDto" parameterType="java.util.Map">
   			select * from tbl_product
   			<!--if 중의 하나라도 조건식이 생성됐을때만 where가 붙음  -->
