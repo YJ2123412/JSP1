@@ -1,0 +1,34 @@
+주요 용어
+
+1. MVC
+2. 배포 설명자(deployment descriptor)
+	ㄴ배포 설명자는 이름이 web.xml인 파일
+	
+ 웹 애플리케이션의 배포 설명자는 애플리케이션의 클래스, 리소스, 구성 및 웹 서버가 이를 사용해서 웹 요청을 처리하는 방법을 기술합니다.
+ 앱의 WAR(설치프로그램)에서 WEB-INF/ 디렉터리에 위치- <web-app> ->  web.xml 
+
+ 웹애플리케이션에 web.xml이 작성되어있지 않으면 톰캣에서 작성한 web.xml이 적용됨
+
+-
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>jsp2_mvc</display-name>
+  <welcome-file-list>
+  <!-- 해당 순서대로 파일 실행함 -->
+    <welcome-file>index.html</welcome-file>
+ </welcome-file-list>
+
+
+공식문서: https://cloud.google.com/appengine/docs/standard/java/config/webxml?hl=ko
+
+
+3. 이 프로젝트에서는 서블릿을 1개만 만들어서 프론트 컨트롤러 역할을 함
+	ㄴ프론트 컨트롤러: url과 요청방식(GET or POST)에 따라 처리할 컨트롤러 객체를 생성 및 동작
+
+4.web.xml
+ 1) 확장자 없는 url 형식이므로 정적 리소스까지 프론트 컨트롤러에서 함->정적 리소스 처리
+ 2) 없는 jsp 파일 요청하면 404 -> error-code 설정
+ 3) 잘못된 url은 예외 발생시킴(프론트 컨트롤러에서 구현)-> exception 설정
+
+
+
