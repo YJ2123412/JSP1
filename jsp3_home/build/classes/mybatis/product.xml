@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "mybatis-3-mapper.dtd">
+  
+  <mapper namespace="tblproduct">
+
+		<select id="getCategories" resultType="CateDto">
+			select * from tbl_category order by code
+		</select>
+
+  		<select id="search" resultType="ProductDto" parameterType="java.util.Map">
+  			select * from tbl_product
+  			<where>
+  				<if test = "category!=null">
+  					category=#{category}
+  				</if>
+  				<if test = "keyword!=null">
+  				  	<trim prefix="and">	<!-- 해당 위치에 and를 찍겠다 ->앞에 내용이 없으면 (pre) 지우겠다 -->
+  					pname like '%'||#{keyword}||'%'
+  					</trim>	
+  				</if>
+  				<if test = "from!=null and to!=null">
+  					<trim prefix="and">
+  					price between #{from} and #{to}
+  					</trim>	
+  				</if>
+  			</where>
+  			<if test="column!=null">
+  			ORDER BY ${column}
+  			</if>
+  		</select>
+  
+	   <select id="selectAll" resultType="ProductDto">
+  		SELECT * FROM TBL_PRODUCT ORDER BY pcode
+  		</select>
+	  
+	  <insert id="insert" parameterType="ProductDto">
+	  	INSERT INTO tbl_product VALUES (#{pcode},#{category},#{pname},#{price})
+	  </insert>
+  
+  </mapper>
+  
+  
+  

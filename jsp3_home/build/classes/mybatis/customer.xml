@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "mybatis-3-mapper.dtd">
+  
+  <mapper namespace="tblcustomer">
+	<insert id="insert" parameterType="CustomerDto">
+  		insert into tbl_custom values (#{custom_id}, #{name}, #{email}, #{age}, sysdate)
+  	</insert>
+  	
+  	<select id="selectAll" resultType="CustomerDto">
+  		SELECT * FROM tbl_custom ORDER BY AGE DESC
+  	</select>
+  	
+  </mapper>
+  
+  
+  
+  
