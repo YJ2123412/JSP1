@@ -9,5 +9,4 @@ import lombok.ToString;
 public class CateDto {
 	private String code;
 	private String name;
-
 }

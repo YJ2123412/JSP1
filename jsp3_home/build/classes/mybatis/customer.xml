@@ -5,7 +5,7 @@
   
   <mapper namespace="tblcustomer">
 	<insert id="insert" parameterType="CustomerDto">
-  		insert into tbl_custom values (#{custom_id}, #{name}, #{email}, #{age}, sysdate)
+  		insert into tbl_custom values (#{CUSTOM_ID}, #{NAME}, #{EMAIL}, #{AGE}, sysdate)
   	</insert>
   	
   	<select id="selectAll" resultType="CustomerDto">

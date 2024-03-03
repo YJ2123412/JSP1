@@ -12,9 +12,10 @@
 	<hr>
 
 	<ul>
-		<li><a href="member/list">회원 목록</a></li>
+		<li><a href="member/memberlist">회원 목록</a></li>
 		<li><a href="member/join">회원 등록</a></li>
-		<li><a href="product/list">물품 목록</a></li>
+		<li><a href="product/productlist">물품 목록</a></li>
+		<li><a href="product/productlist2">물품 목록 검색(작동X)</a></li>
 		<li><a href="product/regist">물품 등록</a></li>
 	</ul>
 

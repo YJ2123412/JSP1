@@ -11,7 +11,7 @@ public class MybatisCustomerDao {
 
 	private SqlSessionFactory sessionFactory= SqlSessionBean.getSessionFactory();
 
-	public int insert(home.dto.CustomerDto dto) {
+	public int insert(CustomerDto dto) {
 		SqlSession sqlSession = sessionFactory.openSession();
 		int result = sqlSession.insert("tblcustomer.insert", dto);
 		sqlSession.commit();

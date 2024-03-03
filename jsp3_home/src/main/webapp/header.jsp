@@ -20,9 +20,9 @@
 <body>
 	<ul>
 		<li><a href=<%=request.getContextPath()%>><strong>HOME</strong></a></li>
-		<li><a href="${pageContext.request.contextPath}/member/list">회원 목록</a></li>
+		<li><a href="${pageContext.request.contextPath}/member/memberlist">회원 목록</a></li>
 		<li><a href="${pageContext.request.contextPath}/member/join">회원 등록</a></li>
-		<li><a href="${pageContext.request.contextPath}/product/list">물품 목록</a></li>
+		<li><a href="${pageContext.request.contextPath}/product/productlist">물품 목록</a></li>
 		<li><a href="${pageContext.request.contextPath}/product/regist">물품 등록</a></li>
 	</ul>
 </body>

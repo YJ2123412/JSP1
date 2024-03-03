@@ -7,6 +7,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import home.dao.MybatisCustomerDao;
 import home.dto.CustomerDto;
 
@@ -18,9 +19,9 @@ public class MemberListController implements Controller{
 		
 		  MybatisCustomerDao dao = new MybatisCustomerDao(); 
 		  List<CustomerDto> list = dao.selectAll(); 
-		  request.setAttribute("list",list);
+		  request.setAttribute("memberlist",list);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("../../webapp/member/list.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("memberlist.jsp");
 		dispatcher.forward(request, response);
 	}
 }

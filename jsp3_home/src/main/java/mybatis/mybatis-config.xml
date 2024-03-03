@@ -6,8 +6,9 @@
   <properties resource="mybatis/db.properties"/>
   
   <typeAliases>
-  		<typeAlias type="../home/dto/CustomerDto.java" alias="CustomerDto"/>
-  		<typeAlias type="../home/dto/ProductDto.java" alias="ProductDto"/>
+  		<typeAlias type="home.dto.CustomerDto" alias="CustomerDto"/>
+  		<typeAlias type="home.dto.ProductDto" alias="ProductDto"/>
+  		<typeAlias type="home.dto.CateDto" alias="CateDto"/>
   </typeAliases>
   
   <environments default="development">

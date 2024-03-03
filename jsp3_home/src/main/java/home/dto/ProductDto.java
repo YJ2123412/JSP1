@@ -12,11 +12,6 @@ public class ProductDto {
 		private String pname;
 		private int price;
 		
-		public ProductDto(String pname, int price) {
-			super();
-			this.pname = pname;
-			this.price = price;
-		}
 
 		@Override
 	    public String toString() {

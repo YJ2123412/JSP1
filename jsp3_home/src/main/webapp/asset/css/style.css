@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 body{
    font-family: 'Roboto', 'Noto Sans KR';
-    letter-spacing: -0.02rem;
+   letter-spacing: -0.02rem;
 }
 
 h2{
@@ -13,3 +13,8 @@ h2{
 .profile> img{
 	width: 80px; height: 80px; border-radius: 20%;
 }
+ul.ullist {
+    display: flex;
+    flex-direction: column;
+}
+

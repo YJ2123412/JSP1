@@ -10,12 +10,11 @@ import lombok.ToString;
 @EqualsAndHashCode
 @AllArgsConstructor
 public class CustomerDto {
-	private String custom_id;
-    private String name;
-    private String email;
-    private int age;
-    private Date reg_date;
-    
+	private String CUSTOM_ID;
+    private String NAME;
+    private String EMAIL;
+    private int AGE;
+    private Date REG_DATE;
 }
 
 
