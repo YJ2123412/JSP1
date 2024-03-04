@@ -22,8 +22,8 @@ public class ProductListController2 implements Controller{
 	
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String method = "GET";
-		if(method.equals(request.getMethod())){
+/*		String method = "GET";
+		if(method.equals(request.getMethod())){*/
 			
 			String category = request.getParameter("category");
 			String keyword = request.getParameter("keyword");
@@ -55,11 +55,11 @@ public class ProductListController2 implements Controller{
 			List<home.dto.CateDto> cateList = dao.getCategories();
 			request.setAttribute("cateList", cateList);
 			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("productList2.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("productlist2.jsp");
 			dispatcher.forward(request, response);
-			} else if(!method.equals(request.getMethod())){
+	/*		} else if(!method.equals(request.getMethod())){
 				System.out.println("POST");
-			}
+			}*/
 		}
 	}
 

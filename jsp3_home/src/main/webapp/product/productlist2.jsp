@@ -11,6 +11,16 @@
 <meta charset="UTF-8">
 <title>물품 목록</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/style.css">
+<style>
+ul.ullist {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+li.lilist{
+    width: 800px;
+}
+</style>
 </head>
 <body>
 <%@ include file="../header.jsp" %>
@@ -31,10 +41,10 @@
 		</form>
 	</div>
 	<hr>
-	<ul >
+	<ul class="ullist" >
 		<c:forEach items="${list }" var="vo" varStatus="status"  >
-			<li  >
-				<ul id="row"  style=" display:-webkit-box;">
+			<li class="lilist" >
+				<ul  class="row"  style=" display:-webkit-box;">
 					<li class="row"><c:out value="${vo.pcode}"/></li>
 					<li class="row"><c:out value="${vo.category }"/></li>
 					<li class="row"><c:out value="${vo.pname }"/></li>
